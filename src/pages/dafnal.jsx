@@ -150,7 +150,7 @@ export default function Dafnal() {
           <motion.button
             key="logo"
             onClick={() => setClicked(true)}
-            className="relative z-10 cursor-pointer focus:outline-none"
+            className="relative z-10 cursor-pointer "
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
@@ -159,7 +159,6 @@ export default function Dafnal() {
             <motion.img
               src="/dafnal.webp"
               alt="Dafnal Logo"
-              
               className="w-48 h-48 md:w-64 md:h-64 object-contain"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
