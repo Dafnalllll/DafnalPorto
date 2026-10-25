@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeSwitcher from "../components/themeswitcher";
 
 const PARTICLE_COUNT = 40;
 
@@ -114,17 +115,26 @@ export default function Dafnal() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative flex items-center justify-center min-h-screen bg-white overflow-hidden"
+      className="relative flex items-center justify-center min-h-screen overflow-hidden transition-colors duration-500"
+      style={{
+        backgroundColor: "var(--bg-main)",
+        color: "var(--text-main)",
+      }}
     >
+      <div className="absolute top-6 right-6 z-20">
+        <ThemeSwitcher />
+      </div>
+
       {/* Grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)
+            linear-gradient(var(--primary-border) 1px, transparent 1px),
+            linear-gradient(90deg, var(--primary-border) 1px, transparent 1px)
           `,
           backgroundSize: "60px 60px",
+          opacity: 0.3,
         }}
       />
 
@@ -132,13 +142,14 @@ export default function Dafnal() {
       {particles.map((p, i) => (
         <div
           key={i}
-          className="absolute pointer-events-none rounded-full bg-neutral-900"
+          className="absolute pointer-events-none rounded-full"
           style={{
             width: homes[i].size,
             height: homes[i].size,
             left: p.x + "%",
             top: p.y + "%",
-            opacity: 0.25,
+            opacity: 0.3,
+            backgroundColor: "var(--primary)",
             transform: "translate(-50%, -50%)",
           }}
         />
@@ -150,7 +161,8 @@ export default function Dafnal() {
           <motion.button
             key="logo"
             onClick={() => setClicked(true)}
-            className="relative z-10 cursor-pointer "
+            aria-label="Klik logo untuk melanjutkan"
+            className="relative z-10 flex flex-col items-center gap-3 cursor-pointer border-0 bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-gray-500"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
@@ -163,6 +175,12 @@ export default function Dafnal() {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
             />
+            <span
+              className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase animate-pulse"
+              style={{ color: "var(--primary)" }}
+            >
+              Start
+            </span>
           </motion.button>
         ) : (
           <motion.div
@@ -181,7 +199,8 @@ export default function Dafnal() {
               transition={{ duration: 0.5, delay: 0.1 }}
             />
             <motion.h1
-              className="text-4xl md:text-6xl font-black tracking-tight text-gray-900"
+              className="text-4xl md:text-6xl font-black tracking-tight"
+              style={{ color: "var(--text-main)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -189,7 +208,8 @@ export default function Dafnal() {
               Coming Soon
             </motion.h1>
             <motion.p
-              className="mt-3 text-lg md:text-xl text-gray-500 font-medium"
+              className="mt-3 text-lg md:text-xl font-medium"
+              style={{ color: "var(--text-muted)" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}

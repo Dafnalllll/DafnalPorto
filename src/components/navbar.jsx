@@ -1,11 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { animate, createTimeline, stagger } from "animejs";
+import { AnimatePresence, motion } from "framer-motion";
+import { Cpu, Menu, X, Code2, User, Home } from "lucide-react";
+import ThemeSwitcher from "./themeswitcher";
+import MobileMenu from "./mobilemenu";
 
 const links = [
-  { to: "/home", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
+  { to: "/home", label: "Home", icon: Home },
+  { to: "/about", label: "About", icon: User },
+  { to: "/projects", label: "Projects", icon: Code2 },
 ];
 
 export default function Navbar() {
@@ -13,8 +17,6 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
-  const mouse = useRef({ x: 0, y: 0 });
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     function handleScroll() {
@@ -28,326 +30,182 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  // Anime.js Entrance Animation
   useEffect(() => {
-    let raf;
-    function loop() {
-      setRotate((p) => ({
-        x: p.x + (mouse.current.y - p.x) * 0.04,
-        y: p.y + (mouse.current.x - p.y) * 0.04,
-      }));
-      raf = requestAnimationFrame(loop);
+    if (!navRef.current) return;
+
+    try {
+      const tl = createTimeline({
+        defaults: {
+          ease: "outExpo",
+        },
+      });
+
+      tl.add(navRef.current, {
+        translateY: [-20, 0],
+        opacity: [0, 1],
+        duration: 800,
+      }).add(
+        ".nav-item",
+        {
+          opacity: [0, 1],
+          translateY: [-10, 0],
+          duration: 500,
+          delay: stagger(100),
+        },
+        "-=400"
+      );
+    } catch (e) {
+      console.error("Anime.js animation error:", e);
     }
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
   }, []);
 
   if (location.pathname === "/") return null;
 
-  function handleMouseMove(e) {
-    if (!navRef.current) return;
-    const rect = navRef.current.getBoundingClientRect();
-    mouse.current = {
-      x: ((e.clientX - rect.left) / rect.width - 0.5) * 6,
-      y: ((e.clientY - rect.top) / rect.height - 0.5) * -6,
-    };
-  }
-
-  function handleMouseLeave() {
-    mouse.current = { x: 0, y: 0 };
-  }
+  const handleLinkHover = (e, isEnter) => {
+    animate(e.currentTarget, {
+      scale: isEnter ? 1.05 : 1,
+      color: isEnter ? "var(--primary)" : "var(--text-muted)",
+      duration: 300,
+      ease: "outQuad",
+    });
+  };
 
   return (
     <>
-      <nav
-        ref={navRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl transition-all duration-700 rounded-2xl ${
-          scrolled
-            ? "bg-white/80 backdrop-blur-2xl"
-            : "bg-white/40 backdrop-blur-lg"
-        }`}
+    <nav
+      ref={navRef}
+      className="fixed top-4 inset-x-4 z-50 mx-auto max-w-5xl transition-all duration-500 rounded-xl border font-mono backdrop-blur-xl"
+      style={{
+        backgroundColor: "var(--surface-main)",
+        borderColor: "var(--primary-border)",
+        boxShadow: scrolled
+          ? "0 0 25px var(--primary-bg)"
+          : "0 0 15px rgba(0,0,0,0.2)",
+      }}
+    >
+      {/* Scanline effect */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-25 rounded-xl"
         style={{
-          perspective: "1200px",
-          border: scrolled
-            ? "1px solid rgba(0,0,0,0.12)"
-            : "1px solid rgba(0,0,0,0.08)",
-          boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.06)" : "none",
+          backgroundImage:
+            "linear-gradient(var(--scanline-color) 50%, transparent 50%)",
+          backgroundSize: "100% 3px",
         }}
-      >
-        {/* 3D ambient shadow */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-700"
-          style={{
-            opacity: scrolled ? 1 : 0,
-            background:
-              "linear-gradient(180deg, rgba(0,0,0,0.02) 0%, transparent 100%)",
-          }}
-        />
+      ></div>
 
-        <div
-          className="max-w-6xl mx-auto px-8 h-20 flex items-center justify-between"
-          style={{
-            transformStyle: "preserve-3d",
-            transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
-            transition: "transform 0.05s linear",
-          }}
+      <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between relative z-10">
+        {/* Futuristic Logo */}
+        <Link
+          to="/home"
+          className="group flex items-center gap-3"
+          style={{ color: "var(--primary)" }}
         >
-          {/* Logo — 3D sphere with glass reflection */}
-          <Link
-            to="/home"
-            className="group flex items-center gap-3"
-            style={{ transformStyle: "preserve-3d" }}
+          <div
+            className="relative w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+            style={{
+              backgroundColor: "var(--surface-raised)",
+              border: "1px solid var(--primary-border)",
+              boxShadow: "0 0 10px var(--primary-bg)",
+            }}
           >
-            <div className="relative" style={{ transformStyle: "preserve-3d" }}>
-              {/* Glass outer ring */}
-              <div
-                className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.05))",
-                  backdropFilter: "blur(4px)",
-                  transform: "translateZ(4px)",
-                }}
-              />
-              {/* Main sphere */}
-              <div
-                className="relative w-10 h-10 flex items-center justify-center text-white text-sm font-light"
-                style={{
-                  transformStyle: "preserve-3d",
-                  transform: `translateZ(20px)`,
-                }}
-              >
-                <div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 30% 25%, #c4b8a8 0%, #7a7064 30%, #2d2a24 70%, #1a1815 100%)",
-                    boxShadow: [
-                      "0 8px 20px rgba(0,0,0,0.15)",
-                      "0 20px 50px rgba(0,0,0,0.08)",
-                      "inset 0 -4px 8px rgba(0,0,0,0.3)",
-                      "inset 0 4px 8px rgba(255,255,255,0.15)",
-                    ].join(", "),
-                    transform: `rotateX(${rotate.x * 0.8}deg) rotateY(${rotate.y * 0.8}deg)`,
-                  }}
-                />
-                <div
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 25% 20%, rgba(255,255,255,0.4) 0%, transparent 45%)",
-                  }}
-                />
-                <div
-                  className="absolute w-1.5 h-1.5 rounded-full"
-                  style={{
-                    top: "7px",
-                    right: "9px",
-                    background: "rgba(255,255,255,0.5)",
-                    filter: "blur(1.5px)",
-                    transform: "translateZ(6px)",
-                  }}
-                />
-                <span
-                  className="relative text-white/95 text-sm tracking-wider"
-                  style={{
-                    transform: "translateZ(10px)",
-                    fontFamily: "'Times New Roman', serif",
-                    fontWeight: 300,
-                    textShadow: "0 1px 3px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  D
-                </span>
-                {/* Shadow drop */}
-                <div
-                  className="absolute -bottom-[10px] left-1/2 -translate-x-1/2 transition-all duration-500"
-                  style={{
-                    width: "32px",
-                    height: "8px",
-                    background:
-                      "radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%)",
-                    filter: "blur(6px)",
-                    transform: `translateZ(-8px) scale(${1 + Math.abs(rotate.y) * 0.05})`,
-                  }}
-                />
-              </div>
-            </div>
+            <Cpu className="w-5 h-5 animate-pulse" style={{ color: "var(--primary)" }} />
+            <div
+              className="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-ping"
+              style={{ backgroundColor: "var(--primary)" }}
+            ></div>
+          </div>
+          <div className="flex flex-col">
             <span
-              className="text-xl tracking-wider text-stone-800 transition-all duration-300 group-hover:tracking-widest"
-              style={{
-                fontFamily: "'Times New Roman', serif",
-                transform: `translateZ(12px)`,
-                textShadow: "0 2px 12px rgba(0,0,0,0.04)",
-              }}
+              className="text-sm font-bold tracking-widest transition-colors"
+              style={{ color: "var(--primary)" }}
             >
-              <span className="font-serif italic">Dafnal</span>
+              DAF.SYS
             </span>
-          </Link>
+            <span className="text-[10px] tracking-wider" style={{ color: "var(--text-muted)" }}>
+              ONLINE // 0x01
+            </span>
+          </div>
+        </Link>
 
-          {/* Desktop links — staggered Z-depth */}
-          <ul
-            className="hidden md:flex items-center"
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            {links.map((link, i) => (
-              <li
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center space-x-2">
+          {links.map((link) => {
+            const Icon = link.icon;
+            const isActive = location.pathname === link.to;
+            return (
+              <NavLink
                 key={link.to}
-                className="relative"
-                style={{
-                  transform: `translateZ(${6 + i * 4}px)`,
-                  transformStyle: "preserve-3d",
-                }}
+                to={link.to}
+                onMouseEnter={(e) => handleLinkHover(e, true)}
+                onMouseLeave={(e) => handleLinkHover(e, false)}
+                className="nav-item relative px-4 py-2 rounded-lg text-xs tracking-widest uppercase transition-all duration-300 flex items-center gap-2 border border-transparent"
+                style={
+                  isActive
+                    ? { color: "var(--primary)" }
+                    : { color: "var(--text-muted)" }
+                }
               >
-                <NavLink
-                  to={link.to}
-                  className={({ isActive }) =>
-                    `relative block px-5 py-2 text-sm tracking-[0.15em] uppercase transition-all duration-300 ${
-                      isActive
-                        ? "text-stone-800"
-                        : "text-stone-400 hover:text-stone-800"
-                    }`
-                  }
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {({ isActive }) => (
-                    <span
-                      className="relative block"
-                      style={{ transformStyle: "preserve-3d" }}
-                    >
-                      <span className="relative z-10 block py-0.5 transition-transform duration-200 hover:scale-105">
-                        {link.label}
-                      </span>
-                      {/* 3D underline */}
-                      <span
-                        className={`absolute left-0 right-0 h-[2px] bottom-0 transition-all duration-300 ${
-                          isActive
-                            ? "scale-x-100 opacity-100"
-                            : "scale-x-0 opacity-0"
-                        }`}
-                        style={{
-                          transformOrigin: "left",
-                          transform: "translateZ(4px)",
-                          background:
-                            "linear-gradient(90deg, #2d2a24 0%, #8a8276 50%, transparent 100%)",
-                          boxShadow: "0 1px 8px rgba(0,0,0,0.1)",
-                        }}
-                      />
-                    </span>
-                  )}
-                </NavLink>
-                {/* Separator line */}
-                {i < links.length - 1 && (
-                  <span
-                    className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-5"
+                {isActive && (
+                  <motion.span
+                    layoutId="activeIndicator"
+                    className="absolute inset-0 z-0 rounded-lg border"
                     style={{
-                      background:
-                        "linear-gradient(180deg, transparent, rgba(0,0,0,0.06), transparent)",
-                      transform: "translateZ(2px)",
+                      backgroundColor: "var(--primary-bg)",
+                      borderColor: "var(--primary-border)",
+                      boxShadow: "0 0 15px var(--primary-bg)",
+                      pointerEvents: "none",
                     }}
-                  />
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  ></motion.span>
                 )}
-              </li>
-            ))}
-          </ul>
-
-          {/* Hamburger */}
-          <button
-            onClick={() => setMenuOpen((o) => !o)}
-            className="md:hidden relative flex flex-col gap-1 p-2 group"
-            aria-label="Toggle menu"
-            style={{ transform: `translateZ(8px)` }}
-          >
-            {[0, 1, 2].map((i) => (
-              <span
-                key={i}
-                className={`block w-6 h-[1.5px] bg-stone-600 transition-all duration-300 ${
-                  i === 0 && menuOpen ? "rotate-45 translate-y-[3.5px]" : ""
-                } ${i === 1 && menuOpen ? "opacity-0 scale-x-0" : ""} ${
-                  i === 2 && menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
-                }`}
-                style={{ transformOrigin: "center" }}
-              />
-            ))}
-          </button>
+                <Icon
+                  className="relative z-10 w-3.5 h-3.5"
+                  style={isActive ? { color: "var(--primary)" } : {}}
+                />
+                <span className="relative z-10">{link.label}</span>
+              </NavLink>
+            );
+          })}
         </div>
 
-        {/* Glass reflection line */}
-        <div
-          className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-          }}
-        />
-      </nav>
+        {/* Theme Switcher & Mobile Toggle */}
+        <div className="flex items-center gap-3">
+          <ThemeSwitcher />
 
-      {/* Mobile overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
-              onClick={() => setMenuOpen(false)}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 220 }}
-              className="fixed top-0 right-0 bottom-0 z-50 bg-white md:hidden"
-              style={{
-                width: "320px",
-                boxShadow:
-                  "-16px 0 50px rgba(0,0,0,0.08), -2px 0 0 rgba(0,0,0,0.03)",
-                perspective: "1000px",
-              }}
-            >
-              <div className="flex items-center justify-end px-8 h-20">
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  className="text-stone-400 hover:text-stone-800 transition-colors text-xl"
-                  aria-label="Close menu"
-                >
-                  &times;
-                </button>
-              </div>
-              <ul className="flex flex-col px-6 gap-1">
-                {links.map((link, i) => (
-                  <motion.li
-                    key={link.to}
-                    initial={{ opacity: 0, x: 40, rotateY: -15 }}
-                    animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                    transition={{ delay: 0.06 + i * 0.05, duration: 0.35 }}
-                    style={{ transformStyle: "preserve-3d" }}
-                  >
-                    <NavLink
-                      to={link.to}
-                      className={({ isActive }) =>
-                        `block py-3.5 px-5 text-sm tracking-[0.15em] uppercase transition-all duration-300 ${
-                          isActive
-                            ? "text-stone-800 bg-stone-50"
-                            : "text-stone-400 hover:text-stone-800 hover:bg-stone-50"
-                        }`
-                      }
-                      style={{
-                        transform: `translateZ(${4 + i * 3}px)`,
-                      }}
-                    >
-                      {link.label}
-                    </NavLink>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2.5 rounded-lg border transition-colors"
+            style={{
+              backgroundColor: "var(--surface-raised)",
+              borderColor: "var(--primary-border)",
+              color: "var(--primary)",
+              boxShadow: "0 0 10px var(--primary-bg)",
+            }}
+            aria-label="Toggle menu"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={menuOpen ? "close" : "open"}
+                initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
+                transition={{ duration: 0.16 }}
+                className="flex"
+              >
+                {menuOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
+              </motion.span>
+            </AnimatePresence>
+          </button>
+        </div>
+      </div>
+
+    </nav>
+    <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   );
 }
