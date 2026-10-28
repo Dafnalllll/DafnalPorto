@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { animate, createTimeline, stagger } from "animejs";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Mail, Terminal, Cpu, Shield, Globe } from "lucide-react";
+import { translations } from "../data/translations";
 
 const socials = [
   { label: "GitHub", href: "https://github.com/Dafnalllll", icon: FaGithub },
@@ -21,14 +21,25 @@ const socials = [
   { label: "Email", href: "mailto:rizkidafa@example.com", icon: Mail },
 ];
 
-const navLinks = [
-  { to: "/home", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-];
-
 export default function Footer() {
   const footerRef = useRef(null);
+  const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
+
+  useEffect(() => {
+    function handleLangChange() {
+      setLang(localStorage.getItem("dafa_portfolio_lang") || "id");
+    }
+    window.addEventListener("languagechange", handleLangChange);
+    return () => window.removeEventListener("languagechange", handleLangChange);
+  }, []);
+
+  const t = translations[lang] || translations.id;
+
+  const navLinks = [
+    { to: "#home", label: t.nav.home },
+    { to: "#about", label: t.nav.about },
+    { to: "#projects", label: t.nav.projects },
+  ];
 
   useEffect(() => {
     if (!footerRef.current) return;
@@ -70,6 +81,18 @@ export default function Footer() {
     });
   };
 
+  const handleNavClick = (e, to) => {
+    if (to.startsWith("#")) {
+      e.preventDefault();
+      const id = to.substring(1);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", to);
+      }
+    }
+  };
+
   return (
     <footer
       ref={footerRef}
@@ -103,7 +126,11 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-8 py-16 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
         {/* Brand Column */}
         <div className="footer-col space-y-4">
-          <Link to="/home" className="inline-flex items-center gap-3 group">
+          <a
+            href="#home"
+            onClick={(e) => handleNavClick(e, "#home")}
+            className="inline-flex items-center gap-3 group cursor-pointer"
+          >
             <div
               className="relative w-10 h-10 rounded-lg border flex items-center justify-center transition-all duration-300"
               style={{
@@ -131,13 +158,12 @@ export default function Footer() {
                 PORTFOLIO // v2.0
               </span>
             </div>
-          </Link>
+          </a>
           <p
             className="text-xs leading-relaxed"
             style={{ color: "var(--text-muted)" }}
           >
-            Next-gen futuristic portfolio interface powered by React & Anime.js.
-            Initializing secure neural link connections...
+            {t.footer.tagline}
           </p>
         </div>
 
@@ -148,19 +174,20 @@ export default function Footer() {
             style={{ color: "var(--primary)" }}
           >
             <Terminal className="w-4 h-4" style={{ color: "var(--primary)" }} />
-            <span>NAVIGATION_NODES</span>
+            <span>{t.footer.nodes}</span>
           </div>
           <ul className="space-y-2">
             {navLinks.map((link) => (
               <li key={link.to}>
-                <Link
-                  to={link.to}
+                <a
+                  href={link.to}
+                  onClick={(e) => handleNavClick(e, link.to)}
                   className="text-xs transition-colors flex items-center gap-2 tracking-widest uppercase hover:text-[var(--primary)]"
                   style={{ color: "var(--text-muted)" }}
                 >
                   <span style={{ color: "var(--primary)" }}>&gt;</span>{" "}
                   {link.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -173,7 +200,7 @@ export default function Footer() {
             style={{ color: "var(--primary)" }}
           >
             <Shield className="w-4 h-4" style={{ color: "var(--primary)" }} />
-            <span>SOCIAL_MEDIA</span>
+            <span>{t.footer.social}</span>
           </div>
           <div className="flex items-center space-x-3">
             {socials.map((social) => {
@@ -205,7 +232,7 @@ export default function Footer() {
             style={{ color: "var(--text-subtle)" }}
           >
             <Globe className="w-3 h-3" style={{ color: "var(--primary)" }} />
-            <span>STATUS: SECURE CONNECTION ESTABLISHED</span>
+            <span>{t.footer.status}</span>
           </div>
         </div>
       </div>
@@ -220,8 +247,7 @@ export default function Footer() {
         }}
       >
         <p>
-          &copy; {new Date().getFullYear()} Rizki Dafa Naldi. ALL RIGHTS
-          RESERVED.
+          &copy; {new Date().getFullYear()} Rizki Dafa Naldi. {t.footer.rights}
         </p>
       </div>
     </footer>

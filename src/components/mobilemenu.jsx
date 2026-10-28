@@ -1,16 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Code2, Home, User, X } from "lucide-react";
-
-const links = [
-  { to: "/home", label: "Home", icon: Home },
-  { to: "/about", label: "About", icon: User },
-  { to: "/projects", label: "Projects", icon: Code2 },
-];
+import { translations } from "../data/translations";
 
 export default function MobileMenu({ isOpen, onClose }) {
+  const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
+
+  useEffect(() => {
+    function handleLangChange() {
+      setLang(localStorage.getItem("dafa_portfolio_lang") || "id");
+    }
+    window.addEventListener("languagechange", handleLangChange);
+    return () => window.removeEventListener("languagechange", handleLangChange);
+  }, []);
+
+  const t = translations[lang] || translations.id;
+
+  const links = [
+    { to: "#home", label: t.nav.home, icon: Home },
+    { to: "#about", label: t.nav.about, icon: User },
+    { to: "#projects", label: t.nav.projects, icon: Code2 },
+  ];
+
   useEffect(() => {
     if (!isOpen) return undefined;
 
@@ -27,6 +39,19 @@ export default function MobileMenu({ isOpen, onClose }) {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
+
+  const handleLinkClick = (e, to) => {
+    if (to.startsWith("#")) {
+      e.preventDefault();
+      const id = to.substring(1);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", to);
+      }
+    }
+    onClose();
+  };
 
   return createPortal(
     <AnimatePresence>
@@ -103,15 +128,15 @@ export default function MobileMenu({ isOpen, onClose }) {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.08 + index * 0.07 }}
                     >
-                      <NavLink
-                        to={link.to}
-                        onClick={onClose}
+                      <a
+                        href={link.to}
+                        onClick={(e) => handleLinkClick(e, link.to)}
                         className="group flex items-center justify-between rounded-2xl border px-5 py-5 transition-colors"
-                        style={({ isActive }) => ({
-                          backgroundColor: isActive ? "var(--primary-bg)" : "var(--surface-main)",
-                          borderColor: isActive ? "var(--primary-border)" : "var(--border-neutral)",
-                          color: isActive ? "var(--primary)" : "var(--text-muted)",
-                        })}
+                        style={{
+                          backgroundColor: "var(--surface-main)",
+                          borderColor: "var(--border-neutral)",
+                          color: "var(--text-muted)",
+                        }}
                       >
                         <span className="flex items-center gap-4">
                           <Icon className="h-5 w-5" />
@@ -120,7 +145,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                           </span>
                         </span>
                         <ArrowUpRight className="h-5 w-5 opacity-60 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                      </NavLink>
+                      </a>
                     </motion.div>
                   );
                 })}

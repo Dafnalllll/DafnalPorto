@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { animate, createTimeline, stagger } from "animejs";
 import { Terminal, AlertTriangle, Home, Palette } from "lucide-react";
 import { themes } from "../components/themes";
+import { translations } from "../data/translations";
 
 export default function NotFound() {
   const containerRef = useRef(null);
@@ -15,6 +16,19 @@ export default function NotFound() {
   const [currentTheme, setCurrentTheme] = useState(() => {
     return localStorage.getItem("dafa_portfolio_theme") || "cyan";
   });
+  const [currentLang, setCurrentLang] = useState(
+    () => localStorage.getItem("dafa_portfolio_lang") || "id"
+  );
+  const themeLabels = translations[currentLang]?.theme || translations.id.theme;
+
+  useEffect(() => {
+    function handleLanguageChange() {
+      setCurrentLang(localStorage.getItem("dafa_portfolio_lang") || "id");
+    }
+
+    window.addEventListener("languagechange", handleLanguageChange);
+    return () => window.removeEventListener("languagechange", handleLanguageChange);
+  }, []);
 
   // Apply Theme
   useEffect(() => {
@@ -107,12 +121,12 @@ export default function NotFound() {
             boxShadow: "0 0 10px var(--primary-bg)",
             color: "var(--primary)",
           }}
-          aria-label="Switch theme"
-          title="Change Theme Color"
+          aria-label={themeLabels.switch}
+          title={themeLabels.switch}
         >
           <Palette className="w-4 h-4" />
           <span className="hidden sm:inline text-[10px] tracking-wider uppercase">
-            {currentTheme}
+            {themeLabels[currentTheme]}
           </span>
         </button>
 
@@ -126,7 +140,7 @@ export default function NotFound() {
             }}
           >
             <div className="px-3 py-1.5 text-[10px] font-semibold tracking-wider border-b" style={{ color: "var(--text-muted)", borderColor: "var(--border-neutral)" }}>
-              SELECT_THEME
+              {themeLabels.select}
             </div>
             {themes.map((t) => (
               <button
@@ -159,7 +173,7 @@ export default function NotFound() {
                       borderColor: "var(--border-neutral)",
                     }}
                   ></span>
-                  {t.label}
+                  {themeLabels[t.id]}
                 </span>
                 {currentTheme === t.id && (
                   <span

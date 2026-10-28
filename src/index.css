@@ -17,6 +17,19 @@
   --text-subtle: #71717a;
   --border-neutral: #3f3f46;
   --scanline-color: rgba(255, 255, 255, 0.08);
+  --project-card-bg: rgba(9, 9, 11, 0.9);
+  --project-page-left-bg: rgba(24, 24, 27, 0.4);
+  --project-page-right-bg: rgba(9, 9, 11, 0.95);
+  --project-card-text: #f4f4f5;
+  --project-card-muted: #a1a1aa;
+  --project-card-subtle: #71717a;
+  --project-chip-bg: #18181b;
+  --project-chip-border: #27272a;
+  --project-chip-text: #d4d4d8;
+  --project-track-bg: #27272a;
+  --project-filter-text: #a1a1aa;
+  --project-filter-border: #27272a;
+  --project-filter-active-text: #ffffff;
 }
 
 [data-theme="white"] {
@@ -34,6 +47,46 @@
   --text-subtle: #64748b;
   --border-neutral: #cbd5e1;
   --scanline-color: rgba(15, 23, 42, 0.08);
+  --project-card-bg: rgba(255, 255, 255, 0.96);
+  --project-page-left-bg: #ffffff;
+  --project-page-right-bg: #ffffff;
+  --project-card-text: #09090b;
+  --project-card-muted: #475569;
+  --project-card-subtle: #64748b;
+  --project-chip-bg: #f1f5f9;
+  --project-chip-border: #cbd5e1;
+  --project-chip-text: #334155;
+  --project-track-bg: #e2e8f0;
+  --project-filter-text: #334155;
+  --project-filter-border: #cbd5e1;
+}
+
+.project-filter-button:not([data-active="true"]) {
+  background-color: var(--bg-main);
+  color: var(--project-filter-text);
+  border-color: var(--project-filter-border);
+}
+
+.project-filter-button:not([data-active="true"]):hover {
+  background-color: var(--bg-main);
+}
+
+.project-filter-button[data-active="true"] {
+  background-color: var(--primary);
+  color: var(--project-filter-active-text);
+  border-color: var(--primary);
+}
+
+.project-progress-track {
+  background-color: var(--project-track-bg);
+}
+
+.project-progress-fill {
+  background-color: var(--primary);
+}
+
+.project-progress-count {
+  color: var(--primary);
 }
 
 [data-theme="black"] {
@@ -51,6 +104,9 @@
   --text-subtle: #737373;
   --border-neutral: #404040;
   --scanline-color: rgba(255, 255, 255, 0.08);
+  --project-filter-text: #a3a3a3;
+  --project-filter-border: #404040;
+  --project-filter-active-text: #000000;
 }
 
 [data-theme="emerald"] {

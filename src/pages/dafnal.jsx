@@ -1,12 +1,21 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../components/themeswitcher";
 
 const PARTICLE_COUNT = 40;
 
 export default function Dafnal() {
   const [clicked, setClicked] = useState(false);
+  const navigate = useNavigate();
   const containerRef = useRef(null);
+
+  const handleStart = () => {
+    setClicked(true);
+    setTimeout(() => {
+      navigate("/home");
+    }, 500);
+  };
 
   // scattered home positions
   const homes = useMemo(
@@ -157,10 +166,10 @@ export default function Dafnal() {
 
       {/* Content */}
       <AnimatePresence mode="wait">
-        {!clicked ? (
+        {!clicked && (
           <motion.button
             key="logo"
-            onClick={() => setClicked(true)}
+            onClick={handleStart}
             aria-label="Klik logo untuk melanjutkan"
             className="relative z-10 flex flex-col items-center gap-3 cursor-pointer border-0 bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-gray-500"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -182,41 +191,6 @@ export default function Dafnal() {
               Start
             </span>
           </motion.button>
-        ) : (
-          <motion.div
-            key="coming-soon"
-            className="relative z-10 text-center"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <motion.img
-              src="/dafnal.webp"
-              alt="Dafnal Logo"
-              className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 object-contain"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            />
-            <motion.h1
-              className="text-4xl md:text-6xl font-black tracking-tight"
-              style={{ color: "var(--text-main)" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              Coming Soon
-            </motion.h1>
-            <motion.p
-              className="mt-3 text-lg md:text-xl font-medium"
-              style={{ color: "var(--text-muted)" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              Something exciting is on the way
-            </motion.p>
-          </motion.div>
         )}
       </AnimatePresence>
     </div>
