@@ -1,7 +1,9 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../components/themeswitcher";
+import LanguageSwitcher from "../components/languageswitcher";
+import { translations } from "../data/translations";
 
 const PARTICLE_COUNT = 40;
 
@@ -9,6 +11,18 @@ export default function Dafnal() {
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
   const containerRef = useRef(null);
+
+  const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
+
+  useEffect(() => {
+    function handleLangChange() {
+      setLang(localStorage.getItem("dafa_portfolio_lang") || "id");
+    }
+    window.addEventListener("languagechange", handleLangChange);
+    return () => window.removeEventListener("languagechange", handleLangChange);
+  }, []);
+
+  const t = translations[lang] || translations.id;
 
   const handleStart = () => {
     setClicked(true);
@@ -130,7 +144,8 @@ export default function Dafnal() {
         color: "var(--text-main)",
       }}
     >
-      <div className="absolute top-6 right-6 z-20">
+      <div className="absolute top-6 right-6 z-20 flex items-center gap-3">
+        <LanguageSwitcher />
         <ThemeSwitcher />
       </div>
 
@@ -170,7 +185,7 @@ export default function Dafnal() {
           <motion.button
             key="logo"
             onClick={handleStart}
-            aria-label="Klik logo untuk melanjutkan"
+            aria-label={t.dafnal.aria}
             className="relative z-10 flex flex-col items-center gap-3 cursor-pointer border-0 bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-gray-500"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -188,7 +203,7 @@ export default function Dafnal() {
               className="text-xs md:text-sm font-mono tracking-[0.2em] uppercase animate-pulse"
               style={{ color: "var(--primary)" }}
             >
-              Start
+              {t.dafnal.start}
             </span>
           </motion.button>
         )}
