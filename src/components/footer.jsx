@@ -87,7 +87,11 @@ export default function Footer() {
       const id = to.substring(1);
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        if (id === "home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
         window.history.pushState(null, "", to);
       }
     }

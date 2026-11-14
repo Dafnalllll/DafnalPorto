@@ -67,38 +67,53 @@ export const translations = {
       items: {
         "01": {
           subtitle: "Sistem Kecerdasan Rapat dan Tugas berbasis AI",
-          description:
-            "Sistem kecerdasan rapat untuk transkripsi otomatis, ringkasan instan, ekstraksi keputusan kunci, dan kategorisasi pembahasan mendalam berbasis LLM.",
+          description: "Sistem kecerdasan rapat untuk transkripsi otomatis, ringkasan instan, ekstraksi keputusan kunci, dan kategorisasi pembahasan mendalam berbasis LLM.",
           status: "DIRILIS // PRODUKSI",
         },
         "02": {
           subtitle: "Klasifikasi Lesi Kulit",
-          description:
-            "Prototipe klasifikasi lesi kulit dengan deep learning, citra dermoskopi dan fluoresensi, serta integrasi edge computing untuk deteksi dini.",
+          description: "Prototipe klasifikasi lesi kulit dengan deep learning, citra dermoskopi dan fluoresensi, serta integrasi edge computing untuk deteksi dini.",
           status: "RISET // BETA",
         },
         "03": {
           subtitle: "Platform Kompetisi Teknologi",
-          description:
-            "Platform kompetisi teknologi komprehensif untuk informasi lomba, pendaftaran peserta terintegrasi, dan sistem penilaian juri secara real-time.",
+          description: "Platform kompetisi teknologi komprehensif untuk informasi lomba, pendaftaran peserta terintegrasi, dan sistem penilaian juri secara real-time.",
           status: "AKTIF // STABIL",
         },
         "04": {
           subtitle: "Pemantauan Lingkungan berbasis IoT",
-          description:
-            "Konsep pemantauan suhu, kelembapan, kadar amonia, dan kualitas lingkungan kandang ternak berbasis IoT dengan dasbor analitik.",
+          description: "Konsep pemantauan suhu, kelembapan, kadar amonia, dan kualitas lingkungan kandang ternak berbasis IoT dengan dasbor analitik.",
           status: "PROTOTIPE // PERANGKAT KERAS",
         },
       },
     },
+    projectDetail: {
+      dossier: "DOSSIER PROYEK",
+      status: "STATUS",
+      coordinate: "KOORDINAT",
+      year: "TAHUN",
+      overview: "Tinjauan & Tujuan Proyek",
+      problem: "Pernyataan Masalah",
+      solution: "Solusi yang Diusulkan",
+      objectives: "Tujuan & Sasaran Utama",
+      architecture: "Arsitektur Teknis & Komponen",
+      workflow: "Alur Kerja Implementasi",
+      gallery: "Galeri Visual & Tangkapan Layar",
+      contributions: "Peran & Kontribusi Saya",
+      challenges: "Tantangan & Pelajaran",
+      evaluation: "Metrik Evaluasi & Hasil",
+      findings: "TEMUAN",
+      systemId: "ID SISTEM",
+      sourceCode: "Kode Sumber",
+      liveDemo: "Demo Langsung",
+    },
     footer: {
-      tagline:
-        "Antarmuka portofolio futuristik generasi berikutnya yang didukung oleh React & Anime.js. Menginisialisasi koneksi tautan saraf aman...",
+      tagline: "Antarmuka portofolio futuristik generasi berikutnya yang didukung oleh React & Anime.js. Menginisialisasi koneksi tautan saraf aman...",
       nodes: "NOD_NAVIGASI",
       social: "MEDIA_SOSIAL",
       status: "STATUS: KONEKSI AMAN TERHUBUNG",
       rights: "HAK CIPTA DILINDUNGI.",
-    },
+    }
   },
   en: {
     dafnal: { start: "START", aria: "Click logo to continue" },
@@ -168,41 +183,56 @@ export const translations = {
       items: {
         "01": {
           subtitle: "AI Meeting & Task Intelligence System",
-          description:
-            "An intelligent meeting system for automatic transcription, instant summaries, key decision extraction, and in-depth discussion categorization powered by LLMs.",
+          description: "An intelligent meeting system for automatic transcription, instant summaries, key decision extraction, and in-depth discussion categorization powered by LLMs.",
           status: "DEPLOYED // PROD",
         },
         "02": {
           subtitle: "Skin Lesion Classification",
-          description:
-            "A skin lesion classification prototype using deep learning, dermoscopic and fluorescence imaging, and edge computing integration for early detection.",
+          description: "A skin lesion classification prototype using deep learning, dermoscopic and fluorescence imaging, and edge computing integration for early detection.",
           status: "RESEARCH // BETA",
         },
         "03": {
           subtitle: "Technology Competition Platform",
-          description:
-            "A comprehensive technology competition platform for event information, integrated participant registration, and real-time jury scoring.",
+          description: "A comprehensive technology competition platform for event information, integrated participant registration, and real-time jury scoring.",
           status: "ACTIVE // STABLE",
         },
         "04": {
           subtitle: "IoT Environmental Monitoring",
-          description:
-            "An IoT concept for monitoring temperature, humidity, ammonia levels, and livestock barn conditions with an analytics dashboard.",
+          description: "An IoT concept for monitoring temperature, humidity, ammonia levels, and livestock barn conditions with an analytics dashboard.",
           status: "PROTOTYPE // HARDWARE",
         },
       },
     },
+    projectDetail: {
+      dossier: "PROJECT DOSSIER",
+      status: "STATUS",
+      coordinate: "COORDINATE",
+      year: "YEAR",
+      overview: "Project Overview & Objectives",
+      problem: "Problem Statement",
+      solution: "Proposed Solution",
+      objectives: "Key Objectives & Goals",
+      architecture: "Technical Architecture & Components",
+      workflow: "Implementation Workflow",
+      gallery: "Screenshots & Visual Gallery",
+      contributions: "My Role & Contributions",
+      challenges: "Challenges & Lessons Learned",
+      evaluation: "Evaluation Metrics & Results",
+      findings: "FINDINGS",
+      systemId: "SYSTEM_ID",
+      sourceCode: "Source Code",
+      liveDemo: "Live Demo",
+    },
     footer: {
-      tagline:
-        "Next-gen futuristic portfolio interface powered by React & Anime.js. Initializing secure neural link connections...",
+      tagline: "Next-gen futuristic portfolio interface powered by React & Anime.js. Initializing secure neural link connections...",
       nodes: "NAVIGATION_NODES",
       social: "SOCIAL_MEDIA",
       status: "STATUS: SECURE CONNECTION ESTABLISHED",
       rights: "ALL RIGHTS RESERVED.",
-    },
+    }
   },
   nl: {
-    dafnal: { start: "AANVANGEN ", aria: "Klik logo om door te gaan" },
+    dafnal: { start: "START", aria: "Klik logo om door te gaan" },
     nav: { home: "Home", about: "Over ons", projects: "Projecten" },
     theme: {
       select: "THEMA_SELECTEREN",
@@ -269,38 +299,53 @@ export const translations = {
       items: {
         "01": {
           subtitle: "AI-systeem voor vergaderingen en taken",
-          description:
-            "Een intelligent vergadersysteem voor automatische transcriptie, directe samenvattingen, extractie van belangrijke beslissingen en diepgaande categorisering van gesprekken met LLM's.",
+          description: "Een intelligent vergadersysteem voor automatische transcriptie, directe samenvattingen, extractie van belangrijke beslissingen en diepgaande categorisering van gesprekken met LLM's.",
           status: "GEDEPLOYEERD // PROD",
         },
         "02": {
           subtitle: "Classificatie van huidlaesies",
-          description:
-            "Een prototype voor classificatie van huidlaesies met deep learning, dermoscopische en fluorescentiebeelden en edge computing voor vroege detectie.",
+          description: "Een prototype voor classificatie van huidlaesies met deep learning, dermoscopische en fluorescentiebeelden en edge computing voor vroege detectie.",
           status: "ONDERZOEK // BÈTA",
         },
         "03": {
           subtitle: "Platform voor technologiecompetities",
-          description:
-            "Een compleet platform voor technologiecompetities met wedstrijdinformatie, geïntegreerde deelnemersregistratie en realtime juryscores.",
+          description: "Een compleet platform voor technologiecompetities met wedstrijdinformatie, geïntegreerde deelnemersregistratie en realtime juryscores.",
           status: "ACTIEF // STABIEL",
         },
         "04": {
           subtitle: "IoT-monitoring van de omgeving",
-          description:
-            "Een IoT-concept voor het monitoren van temperatuur, luchtvochtigheid, ammoniakgehalte en stalomstandigheden met een analytisch dashboard.",
+          description: "Een IoT-concept voor het monitoren van temperatuur, luchtvochtigheid, ammoniakgehalte en stalomstandigheden met een analytisch dashboard.",
           status: "PROTOTYPE // HARDWARE",
         },
       },
     },
+    projectDetail: {
+      dossier: "PROJECT DOSSIER",
+      status: "STATUS",
+      coordinate: "COÖRDINAAT",
+      year: "JAAR",
+      overview: "Projectoverzicht & Doelstellingen",
+      problem: "Probleemstelling",
+      solution: "Voorgestelde Oplossing",
+      objectives: "Belangrijkste Doelstellingen",
+      architecture: "Technische Architectuur & Componenten",
+      workflow: "Implementatieworkflow",
+      gallery: "Schermafbeeldingen & Galerij",
+      contributions: "Mijn Rol & Bijdragen",
+      challenges: "Uitdagingen & Geleerde Lessen",
+      evaluation: "Evaluatiemetrics & Resultaten",
+      findings: "BEVINDINGEN",
+      systemId: "SYSTEEM_ID",
+      sourceCode: "Broncode",
+      liveDemo: "Live Demo",
+    },
     footer: {
-      tagline:
-        "Next-gen futuristische portfolio-interface aangedreven door React & Anime.js. Veilige neurale linkverbindingen initialiseren...",
+      tagline: "Next-gen futuristische portfolio-interface aangedreven door React & Anime.js. Veilige neurale linkverbindingen initialiseren...",
       nodes: "NAVIGATIE_NODES",
       social: "SOCIALE_MEDIA",
-      status: "STATUS: VEILIGE VERBINDING TOT STAND GEBRACHT",
+      status: "STATUS: VEILIGE VERBINDUNG TOT STAND GEBRACHT",
       rights: "ALLE RECHTEN VOORBEHOUDEN.",
-    },
+    }
   },
   ja: {
     dafnal: { start: "スタート", aria: "ロゴをクリックして続行" },
@@ -319,8 +364,7 @@ export const translations = {
     hero: {
       status: "システム準備完了",
       title: "Rizki Dafa Naldi",
-      subtitle:
-        "クリエイティブ・フロントエンドエンジニア // レトロフューチャリスティック・アーキテクト",
+      subtitle: "クリエイティブ・フロントエンドエンジニア // レトロフューチャリスティック・アーキテクト",
       desc: "React、GSAP、そしてシネマティックなレトロフューチャー美学を駆使し、没入感のある高性能なウェブ体験を創造します。",
       explore: "プロジェクトを見る",
       profile: "オペレータープロフィール",
@@ -371,41 +415,56 @@ export const translations = {
       items: {
         "01": {
           subtitle: "AI会議・タスク管理システム",
-          description:
-            "LLMを活用し、会議の自動文字起こし、即時要約、重要な決定事項の抽出、議論内容の詳細な分類を行うシステムです。",
+          description: "LLMを活用し、会議の自動文字起こし、即時要約、重要な決定事項の抽出、議論内容の詳細な分類を行うシステムです。",
           status: "公開済み // 本番環境",
         },
         "02": {
           subtitle: "皮膚病変の分類",
-          description:
-            "深層学習、ダーモスコピー画像と蛍光画像、エッジコンピューティングを組み合わせた早期検出向け皮膚病変分類プロトタイプです。",
+          description: "深層学習、ダーモスコピー画像と蛍光画像、エッジコンピューティングを組み合わせた早期検出向け皮膚病変分類プロトタイプです。",
           status: "研究 // ベータ",
         },
         "03": {
           subtitle: "テクノロジーコンテストプラットフォーム",
-          description:
-            "大会情報、参加者登録、審査員によるリアルタイム採点を統合した総合テクノロジーコンテストプラットフォームです。",
+          description: "大会情報、参加者登録、審査員によるリアルタイム採点を統合した総合テクノロジーコンテストプラットフォームです。",
           status: "稼働中 // 安定",
         },
         "04": {
           subtitle: "IoT環境モニタリング",
-          description:
-            "分析ダッシュボードを備え、温度、湿度、アンモニア濃度、畜舎環境を監視するIoTコンセプトです。",
+          description: "分析ダッシュボードを備え、温度、湿度、アンモニア濃度、畜舎環境を監視するIoTコンセプトです。",
           status: "プロトタイプ // ハードウェア",
         },
       },
     },
+    projectDetail: {
+      dossier: "プロジェクト資料",
+      status: "ステータス",
+      coordinate: "座標",
+      year: "年",
+      overview: "プロジェクト概要と目的",
+      problem: "課題の定義",
+      solution: "提案されたソリューション",
+      objectives: "主要な目標",
+      architecture: "技術アーキテクチャとコンポーネント",
+      workflow: "実装ワークフロー",
+      gallery: "スクリーンショットとギャラリー",
+      contributions: "私の役割と貢献",
+      challenges: "課題と得られた教訓",
+      evaluation: "評価指標と結果",
+      findings: "調査結果",
+      systemId: "システムID",
+      sourceCode: "ソースコード",
+      liveDemo: "ライブデモ",
+    },
     footer: {
-      tagline:
-        "React & Anime.jsを搭載した次世代レトロフューチャーポートフォリオインターフェース。安全なニューラルリンクを初期化中...",
+      tagline: "React & Anime.jsを搭載した次世代レトロフューチャーポートフォリオインターフェース。安全なニューラルリンクを初期化中...",
       nodes: "ナビゲーションノード",
       social: "ソーシャルメディア",
       status: "ステータス：安全な接続が確立されました",
       rights: "全著作権所有。",
-    },
+    }
   },
   de: {
-    dafnal: { start: "STARTEN", aria: "Logo anklicken zum Fortfahren" },
+    dafnal: { start: "START", aria: "Logo anklicken zum Fortfahren" },
     nav: { home: "Startseite", about: "Über mich", projects: "Projekte" },
     theme: {
       select: "THEMA AUSWÄHLEN",
@@ -472,37 +531,52 @@ export const translations = {
       items: {
         "01": {
           subtitle: "KI-System für Meetings und Aufgaben",
-          description:
-            "Ein intelligentes Meeting-System für automatische Transkription, sofortige Zusammenfassungen, Extraktion wichtiger Entscheidungen und detaillierte Gesprächskategorisierung mit LLMs.",
+          description: "Ein intelligentes Meeting-System für automatische Transkription, sofortige Zusammenfassungen, Extraktion wichtiger Entscheidungen und detaillierte Gesprächskategorisierung mit LLMs.",
           status: "BEREITGESTELLT // PRODUKTION",
         },
         "02": {
           subtitle: "Klassifizierung von Hautläsionen",
-          description:
-            "Ein Prototyp zur Klassifizierung von Hautläsionen mit Deep Learning, Dermoskopie- und Fluoreszenzbildern sowie Edge Computing zur Früherkennung.",
+          description: "Ein Prototyp zur Klassifizierung von Hautläsionen mit Deep Learning, Dermoskopie- und Fluoreszenzbildern sowie Edge Computing zur Früherkennung.",
           status: "FORSCHUNG // BETA",
         },
         "03": {
           subtitle: "Plattform für Technologiewettbewerbe",
-          description:
-            "Eine umfassende Plattform mit Wettbewerbsinformationen, integrierter Teilnehmerregistrierung und Bewertung durch die Jury in Echtzeit.",
+          description: "Eine umfassende Plattform mit Wettbewerbsinformationen, integrierter Teilnehmerregistrierung und Bewertung durch die Jury in Echtzeit.",
           status: "AKTIV // STABIL",
         },
         "04": {
           subtitle: "IoT-Umgebungsüberwachung",
-          description:
-            "Ein IoT-Konzept zur Überwachung von Temperatur, Luftfeuchtigkeit, Ammoniakgehalt und Stallbedingungen mit einem Analyse-Dashboard.",
+          description: "Ein IoT-Konzept zur Überwachung von Temperatur, Luftfeuchtigkeit, Ammoniakgehalt und Stallbedingungen mit einem Analyse-Dashboard.",
           status: "PROTOTYP // HARDWARE",
         },
       },
     },
+    projectDetail: {
+      dossier: "PROJEKT-DOSSIER",
+      status: "STATUS",
+      coordinate: "KOORDINATE",
+      year: "JAHR",
+      overview: "Projektübersicht & Ziele",
+      problem: "Problemstellung",
+      solution: "Vorgeschlagene Lösung",
+      objectives: "Hauptziele",
+      architecture: "Technische Architektur & Komponenten",
+      workflow: "Implementierungs-Workflow",
+      gallery: "Screenshots & Galerie",
+      contributions: "Meine Rolle & Beiträge",
+      challenges: "Herausforderungen & Lektionen",
+      evaluation: "Evaluierungsmetriken & Ergebnisse",
+      findings: "ERGEBNISSE",
+      systemId: "SYSTEM_ID",
+      sourceCode: "Quellcode",
+      liveDemo: "Live-Demo",
+    },
     footer: {
-      tagline:
-        "Zukunftsweisende Portfolio-Schnittstelle, angetrieben von React & Anime.js. Sichere Neurale-Link-Verbindungen werden initialisiert...",
+      tagline: "Zukunftsweisende Portfolio-Schnittstelle, angetrieben von React & Anime.js. Sichere Neurale-Link-Verbindungen werden initialisiert...",
       nodes: "NAVIGATION_NODES",
       social: "SOZIALE_MEDIEN",
       status: "STATUS: SICHERE VERBINDUNG HERGESTELLT",
       rights: "ALLE RECHTE VORBEHALTEN.",
-    },
-  },
+    }
+  }
 };

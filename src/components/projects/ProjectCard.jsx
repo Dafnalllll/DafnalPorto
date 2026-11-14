@@ -1,6 +1,6 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Terminal } from "lucide-react";
 
-export default function ProjectCard({ project, index, total, cardRef, t }) {
+export default function ProjectCard({ project, index, total, cardRef, t, onOpenModal }) {
   return (
     <div
       ref={cardRef}
@@ -54,7 +54,8 @@ export default function ProjectCard({ project, index, total, cardRef, t }) {
 
           <div className="relative z-10 my-auto flex items-center justify-center py-4">
             <div
-              className="group/img relative flex aspect-video w-full max-w-md items-center justify-center overflow-hidden rounded-xl border shadow-xl"
+              className="group/img relative flex aspect-video w-full max-w-md items-center justify-center overflow-hidden rounded-xl border shadow-xl cursor-pointer"
+              onClick={() => onOpenModal && onOpenModal(project)}
               style={{
                 borderColor: "var(--primary-border)",
                 backgroundColor: "var(--surface-main)",
@@ -68,6 +69,11 @@ export default function ProjectCard({ project, index, total, cardRef, t }) {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
+                <span className="px-4 py-2 rounded border border-[var(--primary)] bg-black/80 text-[var(--primary)] text-xs font-mono tracking-widest uppercase">
+                  VIEW DOSSIER
+                </span>
+              </div>
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 text-xs font-mono text-white">
                 <span>{t.projects.card.category}: {project.category}</span>
                 <span>{t.projects.card.year}: {project.year}</span>
@@ -143,23 +149,37 @@ export default function ProjectCard({ project, index, total, cardRef, t }) {
               >
                 {t.projects.card.sector}: {project.category}
               </span>
-              {(project.github || project.link) && (
-                <a
-                  href={project.github || project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-xs font-bold font-mono tracking-widest uppercase transition-all duration-300 hover:scale-105"
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => onOpenModal && onOpenModal(project)}
+                  className="inline-flex items-center gap-1.5 rounded-lg border px-4 py-2 text-xs font-bold font-mono tracking-widest uppercase transition-all duration-300 hover:scale-105 cursor-pointer"
                   style={{
-                    backgroundColor: "var(--primary-bg)",
+                    backgroundColor: "var(--surface-raised)",
                     borderColor: "var(--primary-border)",
                     color: "var(--primary)",
-                    boxShadow: "0 0 15px var(--primary-bg)",
                   }}
                 >
-                  <span>{t.projects.source}</span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              )}
+                  <Terminal className="w-3.5 h-3.5" />
+                  <span>DETAILS</span>
+                </button>
+                {(project.github || project.link) && (
+                  <a
+                    href={project.github || project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-xs font-bold font-mono tracking-widest uppercase transition-all duration-300 hover:scale-105"
+                    style={{
+                      backgroundColor: "var(--primary-bg)",
+                      borderColor: "var(--primary-border)",
+                      color: "var(--primary)",
+                      boxShadow: "0 0 15px var(--primary-bg)",
+                    }}
+                  >
+                    <span>{t.projects.source}</span>
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>

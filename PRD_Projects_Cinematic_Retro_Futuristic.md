@@ -1,281 +1,768 @@
-
-# PROMPT — Cinematic Retro Futuristic Project Showcase
+# IMPLEMENTATION PROMPT — Cinematic Retro Futuristic Project Detail Modal
 
 ## 1. Role & Objective
 
-Bertindak sebagai Senior Creative Frontend Engineer yang ahli dalam React, GSAP, ScrollTrigger, Three.js, dan interactive web experiences.
+Act as a Senior Creative Frontend Engineer specializing in React, Vite, Tailwind CSS, GSAP, ScrollTrigger, Three.js, accessible UI architecture, and high-performance interactive portfolio experiences.
 
-Saya ingin mengembangkan section **Projects** pada website portofolio pribadi saya menjadi pengalaman visual *Cinematic Retro Futuristic* yang interaktif, elegan, imersif, dan profesional.
+Your task is to inspect and directly modify my existing portfolio repository to implement a fully functional **Project Detail Panel** presented as a large, cinematic modal containing an in-depth project case study.
 
-Saat ini, section Projects menggunakan layout dua halaman menyerupai buku terbuka dengan card proyek di sisi kiri dan kanan. Pertahankan identitas visual dan struktur dasarnya, tetapi tingkatkan kualitas interaksi, transisi, depth, dan storytelling visual secara signifikan.
+The portfolio uses a Cinematic Retro Futuristic visual direction, with an editorial white grid background, monochrome typography, charcoal surfaces, and amber accents.
 
-**Jangan membuat website baru dari nol.** Prioritaskan modifikasi terhadap implementasi yang sudah ada, dengan mempertahankan komponen, data proyek, tautan, dan navigasi yang masih relevan.
+The existing Projects section already uses a book-inspired, two-page card composition with scroll-driven transitions.
+
+The new modal must complement this existing design rather than replace it.
+
+**Primary objective:** transform each project card from a simple project preview into an entry point to a detailed, interactive case study.
+
+Do not create a separate demo application, rebuild the entire website, or replace existing project content with fabricated examples.
+
+Inspect the repository first, then implement the feature directly into the existing codebase.
+
+---
 
 ## 2. Technology Stack
 
-Gunakan teknologi berikut:
+Use the existing project stack:
 
-- React + Vite
+- React
+- Vite
 - JavaScript JSX
 - Tailwind CSS
 - GSAP
 - GSAP ScrollTrigger
 - Three.js
-- Lucide React untuk ikon jika diperlukan
+- Lucide React, if already installed or appropriate
 
-Gunakan GSAP sebagai sistem utama untuk orkestrasi animasi dan Three.js untuk elemen visual 3D yang benar-benar memberikan nilai tambah.
+Reuse existing dependencies and components wherever possible.
 
-Jangan menambahkan library lain jika kebutuhan dapat dipenuhi dengan teknologi yang sudah tersedia.
+Before installing anything, inspect `package.json` and verify the installed versions.
 
-## 3. Visual Direction
+Do not introduce additional animation or modal libraries unless there is a concrete technical requirement.
 
-Gunakan pendekatan visual **Cinematic Retro Futuristic Editorial**.
+---
 
-Karakter desain:
+## 3. Design Direction
 
-- Clean editorial layout dengan grid putih dan garis teknis tipis.
-- Palet monochrome: putih, off-white, charcoal, dan hitam.
-- Amber sebagai warna aksen utama, sekitar `#C3851D`.
-- Tipografi tegas, modern, dan berkarakter teknis.
-- Elemen HUD, nomor proyek, status sistem, garis koordinat, dan indikator progres.
-- Depth dan perspektif 3D yang subtil tetapi terasa nyata.
-- Motion design sinematik dengan easing yang halus dan terkontrol.
-- Whitespace yang cukup agar informasi proyek tetap mudah dibaca.
+Use the visual direction:
 
-Hindari tampilan seperti dashboard template generik, neon berlebihan, glow di semua elemen, glitch terus-menerus, atau animasi yang mengganggu pembacaan konten.
+**Cinematic Retro Futuristic Editorial + Technical Dossier + Interactive Case Study**
 
-## 4. Main Feature — Scroll-Driven Project Showcase
+### Color palette
 
-Jadikan section Projects sebagai satu pengalaman scroll interaktif menggunakan GSAP ScrollTrigger.
+- Editorial white: `#FFFFFF`
+- Off-white: `#F7F7F5`
+- Charcoal: `#181818`
+- Dark surface: `#242424`
+- Technical gray: `#888888`
+- Primary amber: `#C3851D`
 
-### A. Pinned Project Section
+Use amber selectively for active navigation, technical indicators, focus states, progress markers, and subtle highlights.
 
-- Pin section Projects ketika pengguna memasuki area showcase.
-- Pertahankan layout card dua halaman seperti buku terbuka.
-- Gunakan scroll untuk berpindah dari satu proyek ke proyek berikutnya.
-- Buat setiap transisi terasa seperti perpindahan adegan film.
-- Tampilkan satu proyek aktif pada setiap tahap transisi.
-- Sinkronkan indikator proyek dan progress bar dengan posisi scroll.
-- Setelah proyek terakhir, lepaskan pin dan lanjutkan scroll ke section berikutnya secara natural.
+Avoid excessive neon, strong bloom, persistent glitch effects, and unnecessary gradients.
 
-Gunakan `scrub` jika sesuai agar pergerakan dapat dikendalikan maju dan mundur oleh pengguna melalui scroll.
+### Visual characteristics
 
-Jangan memblokir scroll secara paksa atau membuat navigasi terasa tersendat.
+- Thin technical borders and grid lines.
+- Editorial typography with strong hierarchy.
+- Monospaced metadata and project identifiers.
+- Dark project hero area contrasted with a clean white content area.
+- Precise transitions with restrained 3D depth.
+- Consistent spacing and readable content widths.
+- Technical annotations, section numbering, and progress indicators.
+- Subtle shadows and translucent overlays.
 
-### B. Cinematic Card Transition
+The modal should feel like opening a digital project dossier, not opening a generic dashboard dialog.
 
-Ketika berpindah proyek:
+---
 
-1. Card aktif bergerak sedikit ke arah kamera virtual.
-2. Card mengalami scale, rotation, dan perubahan depth secara terkontrol.
-3. Card lama bergerak menjauh dengan perspektif 3D.
-4. Card berikutnya masuk dari belakang atau dari sisi yang sesuai dengan komposisi.
-5. Informasi proyek lama keluar secara berurutan.
-6. Informasi proyek baru masuk dengan stagger berdasarkan hierarki visual.
-7. Garis HUD dan aksen amber menyala sesaat untuk menandai pergantian proyek.
-8. Progress indicator dan nomor proyek diperbarui sesuai proyek aktif.
+## 4. Entry Point — Existing Project Cards
 
-Gunakan `perspective`, `transform-style: preserve-3d`, dan transformasi 3D CSS jika memadai.
+Integrate the modal into the current Projects section.
 
-Gunakan `gsap.timeline()` untuk menyatukan animasi. Hindari membuat banyak animasi independen yang saling bertabrakan.
+When the user activates a project card or its dedicated detail action:
 
-### C. Book-Inspired Composition
+1. Identify the selected project.
+2. Open the Project Detail Modal.
+3. Display the corresponding project data.
+4. Animate the modal entrance using GSAP.
+5. Preserve the original card layout and scroll interactions.
+6. Allow the user to close the modal and return to the previous browsing position.
 
-Pertahankan karakter dua halaman dari desain saat ini:
+Add a clear, accessible detail action such as `EXPLORE PROJECT`, `VIEW CASE STUDY`, or an equivalent label consistent with the current design.
 
-- Halaman kiri menjadi area visual utama proyek, seperti preview aplikasi, screenshot, video, atau ilustrasi.
-- Halaman kanan menjadi area informasi, meliputi ID proyek, tahun, judul, kategori, deskripsi, teknologi, dan tautan.
-- Pertahankan garis pemisah vertikal sebagai pusat komposisi.
-- Tambahkan bayangan lipatan buku dan depth subtil di sekitar bagian tengah.
-- Saat berpindah proyek, gunakan animasi perspektif yang memberikan kesan lembar editorial digital yang bergerak.
+If the card already has clickable source-code or live-demo links, preserve their existing behavior. Do not make every nested link trigger the modal.
 
-Jangan memaksakan efek membalik halaman yang realistis jika hasilnya mengorbankan keterbacaan atau menyebabkan masalah layout.
+Use a single source of truth for project data and the selected project.
 
-## 5. Three.js — Subtle 3D Atmosphere
+Do not duplicate project metadata in separate components.
 
-Integrasikan Three.js sebagai elemen visual pendukung, bukan sebagai pengganti keseluruhan UI React.
+---
 
-Buat satu elemen 3D utama yang konsisten dengan estetika teknis, misalnya:
+## 5. Modal Architecture and Layout
 
-- Wireframe geometris abstrak.
-- Partikel kecil yang bergerak perlahan.
-- Garis koordinat atau node digital.
-- Objek geometris dengan material gelap dan pencahayaan amber yang subtil.
+Create a large centered modal that occupies approximately 85–92% of the desktop viewport width and 85–90% of its height, subject to available screen space.
 
-Ketentuan:
+Use a maximum width appropriate for a detailed editorial case study.
 
-- Tempatkan objek 3D pada area yang tidak menutupi informasi proyek.
-- Gunakan kamera dengan pergerakan halus dan terbatas.
-- Sinkronkan rotasi, posisi, atau intensitas cahaya dengan progress scroll menggunakan GSAP.
-- Tambahkan parallax ringan berdasarkan pergerakan kursor pada desktop.
-- Hindari model 3D kompleks yang tidak diperlukan.
-- Jangan membuat efek 3D terlalu dominan dibandingkan card.
-- Gunakan satu scene bersama selama section aktif jika memungkinkan, bukan membuat ulang renderer untuk setiap card.
+The modal should include:
 
-Three.js harus menjadi enhancement yang bermakna. Jika sebuah efek lebih efisien menggunakan CSS, gunakan CSS.
+### A. Backdrop
 
-## 6. Interactive Lighting & Microinteractions
+- A charcoal or near-black translucent overlay.
+- Subtle background dimming.
+- Optional restrained backdrop blur.
+- Smooth entrance and exit transitions.
+- Click-outside-to-close behavior, provided it does not conflict with interactions inside the modal.
 
-Tambahkan detail interaksi yang halus:
+### B. Dark Technical Header
 
-- Border card berubah menjadi amber saat hover.
-- Cahaya lembut mengikuti posisi kursor pada area visual card.
-- Elemen teknis bergerak sedikit berdasarkan posisi pointer.
-- Tombol source code dan live demo memiliki feedback hover yang jelas.
-- Status proyek dapat menggunakan label seperti `DEPLOYED // PROD`, `IN DEVELOPMENT`, atau status aktual dari data proyek.
-- Nomor proyek menggunakan format konsisten, misalnya `02 / 04`.
-- Progress indicator memperlihatkan posisi proyek aktif.
+Use a charcoal background with white typography and amber accents.
 
-Pastikan hover effects tidak mengganggu animasi scroll dan tetap berfungsi pada perangkat touchscreen.
+Include:
 
-## 7. Project Content & Data
+- Project identifier, such as `PROJECT DOSSIER // 02`.
+- Current project title.
+- Project category.
+- Year, when available.
+- Actual project status, when available.
+- Previous-project button.
+- Next-project button.
+- Close button.
 
-Jangan mengubah informasi proyek yang sudah ada tanpa alasan.
+Keep the header compact enough to preserve space for the case study.
 
-Gunakan struktur data proyek yang terpisah dari komponen visual agar mudah dikelola.
+Use a sticky header within the modal if appropriate, ensuring it does not consume excessive vertical space.
 
-Setiap proyek dapat memiliki:
+### C. Project Hero
 
-- `id`
-- `title`
-- `year`
-- `category`
-- `description`
-- `technologies`
-- `image` atau media preview
-- `sourceUrl`
-- `demoUrl`
-- `status`
+Create a prominent visual section containing:
 
-Gunakan data aktual yang sudah tersedia di dalam repository. Jangan mengarang tautan, status deployment, tahun, atau teknologi proyek.
+- Project cover image, screenshot, video, or existing media.
+- Project title and subtitle.
+- Short project summary.
+- Technology indicators.
+- Relevant metadata.
+- Optional technical annotation or visual index.
 
-Jika informasi tertentu tidak tersedia, pertahankan fallback yang sesuai.
+Use an image-first composition that makes the project recognizable immediately.
 
-Pastikan animasi transisi tidak menyebabkan data proyek aktif dan tautannya tertukar.
+For projects with existing screenshots, reuse those assets.
 
-## 8. Animation Direction & Timing
+If the repository contains no suitable image, provide a deliberate fallback visual consistent with the design system. Never fabricate a real project screenshot or claim that a placeholder is actual application output.
 
-Gunakan motion design yang memiliki hierarki:
+### D. White Editorial Content Area
 
-- Project transition: sekitar 0,8–1,4 detik.
-- Text stagger: sekitar 0,04–0,10 detik antar elemen.
-- Hover interaction: sekitar 0,2–0,4 detik.
-- Camera movement: halus, terbatas, dan tidak agresif.
+The main content area should use a white or off-white background.
 
-Angka tersebut merupakan titik awal, bukan aturan mutlak. Sesuaikan dengan hasil visual dan durasi scroll.
+Organize the case study into clearly numbered sections, with thin dividers and sufficient whitespace.
 
-Prioritaskan easing yang sinematik dan natural. Hindari penggunaan animasi linear untuk semua elemen.
+Use a two-column layout on wide screens when appropriate, and a single-column layout on narrow screens.
 
-Jangan menganimasikan terlalu banyak properti secara bersamaan tanpa tujuan visual.
+The content must remain readable even when animation is disabled.
 
-## 9. Technical Implementation Requirements
+---
 
-### GSAP
+## 6. Detailed Case Study Sections
 
-- Register `ScrollTrigger` dengan benar.
-- Gunakan `gsap.context()` atau pendekatan cleanup yang sesuai dengan lifecycle React.
-- Bersihkan timeline, ScrollTrigger, event listeners, dan animation instances ketika komponen unmount.
-- Pastikan implementasi kompatibel dengan React Strict Mode.
-- Hindari pembuatan ScrollTrigger berulang saat state berubah.
-- Gunakan `invalidateOnRefresh` dan `refresh` secara tepat ketika layout memang berubah.
+Build reusable sections that can be rendered conditionally according to each project's available data.
 
-### Three.js
+### Section 01 — Project Overview
 
-- Gunakan satu renderer untuk scene utama jika memungkinkan.
-- Atur ukuran canvas mengikuti container.
-- Gunakan `ResizeObserver` atau pendekatan responsif yang sesuai.
-- Hentikan animation loop dan lepaskan resource GPU ketika komponen unmount.
-- Dispose geometri, material, tekstur, dan renderer sesuai kebutuhan.
-- Batasi jumlah partikel dan beban rendering.
-- Hindari penggunaan post-processing berat jika tidak diperlukan.
+Display:
 
-### React
+- Project description.
+- Project objectives.
+- Project type.
+- Development period, if available.
+- Project status, if available.
+- Relevant links.
 
-- Pisahkan data, komponen UI, dan scene 3D secara logis.
-- Hindari penggunaan React state untuk setiap frame animasi.
-- Gunakan refs untuk elemen yang dikendalikan GSAP.
-- Pastikan perubahan proyek tidak menyebabkan flicker atau remount yang tidak perlu.
+The overview should explain what the project does and why it exists.
 
-## 10. Performance & Accessibility
+### Section 02 — Problem Statement
 
-- Pertahankan performa yang baik pada desktop dan laptop kelas menengah.
-- Hindari layout thrashing dan animasi properti layout seperti `top`, `left`, atau `width` jika transformasi dapat digunakan.
-- Gunakan `transform` dan `opacity` untuk animasi yang sering berjalan.
-- Hormati `prefers-reduced-motion`.
-- Sediakan fallback tanpa efek 3D untuk perangkat yang kurang mampu.
-- Pastikan teks, tombol, tautan, dan indikator tetap dapat diakses.
-- Pada perangkat mobile, gunakan layout yang lebih sederhana dan jangan memaksakan book layout dua kolom yang terlalu sempit.
-- Pastikan section tetap dapat dinavigasi tanpa mouse.
+Explain the actual problem addressed by the project.
 
-## 11. Responsive Behavior
+Include, when available:
 
-Desktop:
+- Existing limitations.
+- Target users.
+- Operational or technical challenges.
+- Requirements and constraints.
 
-- Gunakan book layout dua halaman.
-- Aktifkan pinned scroll storytelling.
-- Aktifkan parallax dan interaksi 3D jika performa memungkinkan.
+Do not invent problems merely to fill this section.
 
-Tablet:
+### Section 03 — Proposed Solution
 
-- Pertahankan komposisi editorial dengan skala yang sesuai.
-- Kurangi intensitas perspektif dan jumlah efek dekoratif.
+Describe how the project addresses the identified problem.
 
-Mobile:
+Present the solution through concise explanations, visual callouts, and relevant technical information.
 
-- Gunakan satu card atau satu halaman informasi per proyek.
-- Gunakan scroll vertikal yang natural.
-- Kurangi atau nonaktifkan pinning jika membuat navigasi sulit.
-- Nonaktifkan efek pointer yang tidak relevan.
-- Pertahankan seluruh informasi dan tautan proyek.
+### Section 04 — Technical Architecture
 
-## 12. Implementation Workflow
+Include an architecture diagram or system flow diagram when the project has sufficient technical information.
 
-Sebelum menulis kode:
+Examples of diagram elements:
 
-1. Periksa struktur repository dan `package.json`.
-2. Temukan komponen Projects, data proyek, stylesheet, dan konfigurasi Tailwind yang sudah digunakan.
-3. Identifikasi implementasi animasi yang ada dan tentukan bagian yang harus dipertahankan.
-4. Periksa versi GSAP, Tailwind, React, dan dependency Three.js.
-5. Hindari mengasumsikan struktur folder atau nama komponen sebelum memeriksanya.
+- Frontend.
+- Backend.
+- API layer.
+- Database.
+- Machine learning model.
+- External services.
+- Hardware or IoT devices.
+- Data processing pipeline.
 
-Kemudian implementasikan secara bertahap:
+Use a reusable React-based diagram component, SVG, or another lightweight approach appropriate to the available information.
 
-1. Refactor struktur card jika diperlukan tanpa mengubah tampilan dasar secara drastis.
-2. Implementasikan pinned scroll dan transisi antarproyek menggunakan GSAP.
-3. Tambahkan depth dan perspektif 3D.
-4. Integrasikan scene Three.js yang ringan.
-5. Tambahkan microinteractions dan progress indicator.
-6. Implementasikan responsive behavior dan reduced-motion fallback.
-7. Jalankan build dan perbaiki seluruh error yang muncul.
+Only represent actual system components and connections that can be verified from existing project documentation or code.
 
-## 13. Definition of Done
+If architecture details are missing, display a clear fallback or omit the diagram instead of inventing a system architecture.
 
-Implementasi dianggap selesai jika:
+### Section 05 — Implementation Process
 
-- Layout dua halaman yang sudah ada tetap dikenali.
-- Perpindahan proyek terasa sinematik dan tidak monoton.
-- Scroll mengendalikan progres animasi secara natural.
-- Informasi proyek selalu terbaca dan sinkron dengan proyek aktif.
-- Three.js menambahkan depth tanpa mengganggu konten.
-- Seluruh tombol dan tautan tetap berfungsi.
-- Tidak ada memory leak atau animation loop yang tertinggal.
-- Tidak ada error build.
-- Tampilan responsif di desktop, tablet, dan mobile.
-- Pengalaman tetap baik saat reduced motion diaktifkan.
+Describe the actual development workflow.
 
-## 14. Expected Output
+Where applicable, include:
 
-Berikan implementasi kode yang benar-benar terintegrasi dengan repository, bukan sekadar mockup atau pseudocode.
+- Requirements and planning.
+- Data preparation.
+- Model development.
+- API integration.
+- Frontend implementation.
+- Hardware integration.
+- Testing and deployment.
 
-Jelaskan secara ringkas:
+Render this section as a timeline, numbered steps, or technical milestones.
 
-1. File yang diubah dan ditambahkan.
-2. Dependensi yang diperlukan beserta alasan penggunaannya.
-3. Cara kerja timeline GSAP dan ScrollTrigger.
-4. Cara Three.js diintegrasikan.
-5. Cara mengatur data dan jumlah proyek.
-6. Cara menjalankan dan menguji implementasi.
+Use the format best suited to each project's development process.
 
-Jika ada konflik dengan arsitektur yang sudah ada, prioritaskan solusi yang paling sederhana, stabil, dan mudah dirawat.
+### Section 06 — Screenshots and Gallery
 
-**Final creative direction:** the result should feel like an editorial portfolio transforming into a cinematic digital experience — precise, restrained, tactile, and unmistakably retro futuristic. The animations must serve the storytelling of each project rather than exist merely as decoration.
+Create a responsive project gallery.
+
+Support:
+
+- Multiple screenshots.
+- Captions.
+- Screen or feature descriptions.
+- Optional full-size image viewing.
+- Appropriate image aspect ratios.
+- Lazy loading for noncritical images.
+
+Use existing assets from the repository.
+
+If the project has several screenshots, use a visually varied but consistent layout rather than displaying every image as an identical grid card.
+
+Ensure images are optimized and do not cause large layout shifts.
+
+### Section 07 — Technology Stack
+
+Display actual technologies used in the project.
+
+Group them when appropriate:
+
+- Frontend.
+- Backend.
+- Database.
+- Machine learning.
+- Infrastructure.
+- Hardware.
+- Tools.
+
+Use compact technical tags with restrained hover effects.
+
+Do not infer technologies from unrelated projects or add tools that were not used.
+
+### Section 08 — My Role and Contributions
+
+Describe the actual work performed on the project.
+
+Where supported by existing data, include:
+
+- Individual responsibilities.
+- Features implemented.
+- Architectural decisions.
+- Integration work.
+- Collaboration context.
+- Technical challenges resolved.
+
+If the project is collaborative, distinguish individual contributions from the team's collective output.
+
+Do not fabricate ownership, team size, or responsibilities.
+
+### Section 09 — Evaluation and Results
+
+Provide an evidence-based evaluation section.
+
+For projects with available measurements, display relevant results such as:
+
+- Accuracy, precision, recall, F1-score, or other applicable metrics.
+- Latency or processing time.
+- Performance measurements.
+- Functional testing results.
+- User testing results.
+- Deployment or integration status.
+- Known limitations.
+
+Use charts or metric cards only when actual data exists.
+
+For machine learning projects, clearly distinguish validation metrics, test metrics, and deployment observations when that information is available.
+
+For projects without numerical evaluation, present qualitative testing outcomes or documented implementation achievements.
+
+Do not invent metrics, percentages, user counts, or performance improvements.
+
+If results have not been evaluated, state that the evaluation data is unavailable or not yet conducted.
+
+### Section 10 — Challenges and Lessons Learned
+
+Explain actual technical challenges and the lessons derived from implementation.
+
+Potential areas include:
+
+- Integration issues.
+- Performance constraints.
+- Model limitations.
+- Data quality.
+- Responsive layout.
+- Deployment problems.
+- Scalability and maintainability.
+
+Render this section only when relevant information exists.
+
+### Section 11 — Project Links
+
+Provide clear actions for:
+
+- Source code.
+- Live demo.
+- Documentation.
+- Related publications or presentations, when available.
+
+Use only existing and verified URLs.
+
+Open external destinations safely and preserve their intended behavior.
+
+Hide unavailable actions rather than generating placeholder URLs.
+
+---
+
+## 7. Project Navigation
+
+Implement previous-project and next-project navigation inside the modal.
+
+### Required behavior
+
+- Previous navigates to the previous project in the existing project collection.
+- Next navigates to the next project.
+- The project title, identifier, status, hero image, gallery, and all sections update together.
+- The modal remains open during navigation.
+- The modal content returns to the top after changing projects.
+- Navigation respects the existing project order.
+- At the beginning and end of the collection, either disable the unavailable direction or implement clearly indicated wrapping behavior. Prefer disabled navigation unless the existing portfolio already uses cyclic navigation.
+- Disabled buttons must be visually distinct and inaccessible to activation.
+
+Use a coordinated transition between projects rather than abruptly replacing the entire interface.
+
+The transition may include:
+
+1. Brief content fade-out.
+2. Subtle horizontal or depth movement.
+3. Updating the active project.
+4. Content fade-in with a short stagger.
+5. Updating the project counter and progress indicator.
+
+Ensure that the animation does not introduce stale content, incorrect links, or race conditions.
+
+---
+
+## 8. GSAP Animation System
+
+Use GSAP to orchestrate modal transitions.
+
+### Opening animation
+
+Create a controlled entrance sequence:
+
+1. Fade in the backdrop.
+2. Bring the modal into view using subtle scale and vertical translation.
+3. Reveal the dark header.
+4. Introduce the project hero.
+5. Reveal key metadata and content in a short stagger.
+
+The sequence should feel cinematic without being slow.
+
+### Closing animation
+
+- Animate the modal out smoothly.
+- Fade out the backdrop.
+- Restore the previous browsing state.
+- Return focus to the element that opened the modal.
+
+### Content transitions
+
+Use reusable timelines for changing projects and revealing sections.
+
+Avoid animating every paragraph independently.
+
+Prioritize `transform` and `opacity` for motion effects.
+
+### React lifecycle
+
+- Register `ScrollTrigger` only where required.
+- Use `gsap.context()` or an equivalent cleanup-safe approach.
+- Revert animations and remove listeners when components unmount.
+- Ensure compatibility with React Strict Mode.
+- Avoid duplicate timelines and stale references.
+- Prevent modal animations from unintentionally affecting the underlying Projects section.
+
+Respect `prefers-reduced-motion`. In reduced-motion mode, show content immediately or use minimal transitions.
+
+---
+
+## 9. Three.js Integration
+
+Three.js should enhance the project hero or a dedicated decorative region, not render the modal's text, controls, or complete interface.
+
+Create an optional reusable visual scene featuring restrained technical elements such as:
+
+- Abstract wireframe geometry.
+- Subtle particles.
+- Technical coordinate lines.
+- A small geometric object.
+- Controlled amber lighting.
+
+### Integration requirements
+
+- Keep the scene visually secondary to the project content.
+- Use a shared renderer where appropriate.
+- Mount the scene only when needed.
+- Avoid initializing a new WebGL context for every project navigation.
+- Coordinate visual changes with the active project when appropriate.
+- Keep camera movement subtle.
+- Avoid heavy post-processing.
+- Provide a CSS or static-image fallback when WebGL is unavailable.
+- Respect reduced-motion preferences.
+- Pause unnecessary rendering when the modal is closed or the scene is not visible.
+- Dispose of geometry, materials, textures, renderer resources, and event listeners appropriately.
+
+Do not add Three.js merely to satisfy a technology requirement. If a particular project already has compelling screenshots or diagrams, prioritize those visuals over unnecessary 3D effects.
+
+---
+
+## 10. Modal Interaction and Accessibility
+
+Implement the modal with proper accessibility semantics.
+
+Required behaviors:
+
+- Use an appropriate dialog role and accessible name.
+- Set `aria-modal="true"` when the modal is open.
+- Move focus into the modal when it opens.
+- Keep keyboard focus within the modal while it is open.
+- Restore focus to the original trigger when it closes.
+- Support the Escape key.
+- Provide visible focus indicators.
+- Use accessible labels for icon-only buttons.
+- Prevent the background page from being interacted with while the modal is open.
+- Restore background scrolling after closing.
+- Avoid nesting interactive elements incorrectly.
+- Ensure navigation and close controls work with a keyboard.
+
+Prevent body scroll while the modal is open without breaking the original scroll position or the pinned Projects section.
+
+If the modal contains long content, make its content area independently scrollable.
+
+Do not place the close button in a location where it becomes inaccessible on smaller screens.
+
+---
+
+## 11. Responsive Design
+
+### Desktop
+
+- Center the modal within the viewport.
+- Use a large editorial layout.
+- Display hero media and text side by side when suitable.
+- Use two-column content sections when there is enough space.
+- Keep previous, next, and close controls visible.
+
+### Tablet
+
+- Reduce modal padding.
+- Adjust hero composition.
+- Collapse content columns when necessary.
+- Reduce decorative 3D effects.
+
+### Mobile
+
+- Use a near-full-screen modal or a full-screen dialog.
+- Use a single-column content layout.
+- Keep the header compact.
+- Preserve accessible previous, next, and close actions.
+- Use responsive screenshots and diagrams.
+- Prevent horizontal overflow.
+- Ensure long technology labels and project titles wrap correctly.
+- Disable unnecessary pointer-driven effects.
+- Avoid nested scroll areas where they impair usability.
+
+Test the modal at narrow viewport widths and with long project descriptions.
+
+---
+
+## 12. Project Data Architecture
+
+Inspect the current project data structure before implementation.
+
+Extend the existing structure rather than creating an unrelated data source.
+
+If appropriate, use a structure similar to the following, adapted to the existing naming conventions:
+
+```js
+{
+  id: "bccare",
+  title: "BCCare",
+  year: "2024",
+  category: "AI / Machine Learning",
+  status: "Prototype",
+
+  description: "...",
+
+  overview: {
+    objectives: [],
+    problem: "...",
+    solution: "..."
+  },
+
+  architecture: {
+    description: "...",
+    nodes: [],
+    edges: []
+  },
+
+  process: [],
+
+  gallery: [
+    {
+      src: "/images/example.png",
+      alt: "Accurate description of the screenshot",
+      caption: "..."
+    }
+  ],
+
+  technologies: [],
+
+  contributions: [],
+
+  evaluation: {
+    metrics: [],
+    findings: [],
+    limitations: []
+  },
+
+  challenges: [],
+
+  links: {
+    source: null,
+    demo: null,
+    documentation: null
+  }
+}
+```
+
+This is an illustrative schema, not a requirement to replace the repository's current schema wholesale.
+
+Use optional fields and sensible fallbacks.
+
+Do not hardcode BCCare content into the modal component.
+
+Do not generate fake content to populate missing fields.
+
+Use conditional rendering so every project can have its own appropriate case study depth.
+
+---
+
+## 13. Suggested Component Architecture
+
+Adapt these names to the existing project structure.
+
+Potential components:
+
+- `ProjectDetailModal`
+- `ProjectModalHeader`
+- `ProjectHero`
+- `ProjectOverview`
+- `ProjectArchitecture`
+- `ProjectProcess`
+- `ProjectGallery`
+- `ProjectTechnologyStack`
+- `ProjectEvaluation`
+- `ProjectNavigation`
+- `ProjectVisualScene`
+
+Keep components reusable without creating unnecessary abstraction.
+
+Separate concerns between:
+
+- Project data.
+- Modal state and navigation.
+- GSAP timelines.
+- Three.js scene lifecycle.
+- Case study content rendering.
+
+The existing Projects section should remain responsible for presenting cards and opening the selected project's details.
+
+---
+
+## 14. Performance and Reliability
+
+The modal must not degrade the existing portfolio experience.
+
+Requirements:
+
+- Avoid unnecessary React re-renders during animation.
+- Use refs for GSAP-controlled elements.
+- Lazy-load noncritical gallery images.
+- Prevent layout shifts by defining image dimensions or aspect ratios.
+- Reuse expensive rendering resources when appropriate.
+- Avoid creating WebGL contexts for every project.
+- Avoid unnecessary state updates during animation frames.
+- Prevent duplicate event listeners and scroll locks.
+- Ensure modal navigation works after repeated open-close cycles.
+- Handle missing images and unavailable links gracefully.
+- Maintain readable content if JavaScript animation or WebGL effects are unavailable.
+- Avoid unnecessary bundle-size increases.
+
+---
+
+## 15. Implementation Workflow
+
+Follow this sequence.
+
+### Phase 1 — Repository inspection
+
+Inspect:
+
+- Project directory structure.
+- `package.json`.
+- Existing Projects components.
+- Existing project data.
+- Current GSAP timelines and ScrollTrigger configuration.
+- Tailwind CSS setup.
+- Existing media and screenshots.
+- Existing source-code and demo links.
+
+Identify integration risks before changing code.
+
+### Phase 2 — Core modal
+
+Implement:
+
+- Selected-project state.
+- Modal open and close behavior.
+- Backdrop.
+- Dark header.
+- White content area.
+- Previous and next navigation.
+- Keyboard interaction.
+- Scroll locking and focus management.
+
+Ensure the core modal works before adding decorative effects.
+
+### Phase 3 — Case study content
+
+Implement reusable sections for:
+
+- Overview.
+- Problem and solution.
+- Architecture diagram.
+- Development process.
+- Screenshot gallery.
+- Technology stack.
+- Individual contributions.
+- Evaluation and results.
+- Challenges and limitations.
+- Project links.
+
+Use actual repository data and conditionally hide unavailable sections.
+
+### Phase 4 — Motion design
+
+Add GSAP animations for:
+
+- Modal entrance and exit.
+- Header and hero reveal.
+- Project-to-project transitions.
+- Subtle content staggering.
+
+Ensure that animation cleanup and reduced-motion behavior work correctly.
+
+### Phase 5 — Three.js enhancement
+
+Integrate the decorative 3D scene only after the modal and its content are stable.
+
+Verify performance and fallback behavior.
+
+### Phase 6 — Validation
+
+Run the available linting and production build commands.
+
+Test:
+
+- Opening a modal from each project card.
+- Closing via the close button, Escape, and backdrop.
+- Previous and next navigation.
+- Long content and image galleries.
+- Repeated open-close cycles.
+- Keyboard-only navigation.
+- Reduced-motion preferences.
+- Responsive layouts.
+- Missing media and links.
+- Existing Projects scroll interactions.
+- Browser console errors and production build errors.
+
+Fix all issues introduced by the implementation.
+
+Do not claim that a test passed unless it was actually run.
+
+---
+
+## 16. Definition of Done
+
+The implementation is complete when:
+
+1. Every existing project card can open its corresponding detail modal.
+2. The modal uses a dark technical header and a white editorial content area.
+3. The case study supports detailed content, screenshots, architecture diagrams, and evaluation data.
+4. Previous and next navigation works correctly without closing the modal.
+5. GSAP animations are coordinated, reversible where appropriate, and cleanup-safe.
+6. Three.js remains decorative and does not compromise usability.
+7. Keyboard navigation and focus management work correctly.
+8. The layout is responsive and has no horizontal overflow.
+9. Existing project cards, links, and scroll animations remain functional.
+10. Missing data is handled honestly without fabricated project information.
+11. There are no new console errors or unresolved production build errors.
+12. The implementation integrates with the existing repository rather than existing as a disconnected example.
+
+---
+
+## 17. Expected Deliverables
+
+Implement the feature directly in the existing repository.
+
+After implementation, provide:
+
+1. A concise summary of the changes.
+2. A list of modified and newly created files.
+3. Any dependencies added and the reason for each.
+4. An explanation of the modal state, navigation, and GSAP animation lifecycle.
+5. An explanation of the Three.js scene lifecycle and fallback.
+6. Instructions for adding case study content to additional projects.
+7. Build and validation results, including any remaining issues.
+
+Do not stop at a plan, a visual mockup, or pseudocode. Make the actual code changes.
+
+If a technical assumption conflicts with the existing repository, inspect the code and choose the least disruptive implementation.
+
+**Final creative direction:** Opening a project should feel like entering a cinematic technical dossier. The experience must combine editorial clarity, rich case-study content, restrained amber HUD details, and purposeful motion. Visual effects should reinforce the story of each project, never obscure the engineering work behind it.

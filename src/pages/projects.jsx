@@ -11,10 +11,12 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { projectsData, categories } from "../data/projectsData";
+import { projectDetailsTranslations } from "../data/projectDetailsTranslations";
 import { translations } from "../data/translations";
 import ProjectCanvas from "../components/projects/ProjectCanvas";
 import ProjectFilters from "../components/projects/ProjectFilters";
 import ProjectCard from "../components/projects/ProjectCard";
+import ProjectDetailModal from "../components/projects/ProjectDetailModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +24,8 @@ export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
   const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
 
   useEffect(() => {
     function handleLangChange() {
@@ -40,11 +44,35 @@ export default function Projects() {
         : projectsData.filter((project) => project.category === selectedCategory),
     [selectedCategory]
   );
-  const localizedProjects = filteredProjects.map((project) => ({
-    ...project,
-    ...t.projects.items[project.id],
-    category: t.projects.categories[project.category] || project.category,
-  }));
+  const localizedProjects = filteredProjects.map((project) => {
+    const localized = t.projects.items[project.id];
+    const details = projectDetailsTranslations[lang]?.[project.id];
+
+    return {
+      ...project,
+      ...localized,
+      category: t.projects.categories[project.category] || project.category,
+      ...(details && {
+        overview: { ...project.overview, ...details.overview },
+        architecture: { ...project.architecture, ...details.architecture },
+        process: details.process || project.process,
+        gallery: project.gallery.map((image, index) => ({
+          ...image,
+          caption: details.gallery?.[index] || image.caption,
+        })),
+        contributions: details.contributions || project.contributions,
+        challenges: details.challenges || project.challenges,
+        evaluation: project.evaluation && {
+          ...project.evaluation,
+          ...details.evaluation,
+          metrics: project.evaluation.metrics.map((metric, index) => ({
+            ...metric,
+            label: details.evaluation?.metrics?.[index] || metric.label,
+          })),
+        },
+      }),
+    };
+  });
   const hasProjects = filteredProjects.length > 0;
 
   const containerRef = useRef(null);
@@ -54,6 +82,20 @@ export default function Projects() {
   const cardsRef = useRef([]);
   const activeProjectIndexRef = useRef(0);
   const sceneProgressRef = useRef({ value: 0 });
+
+  const handleOpenModal = (project) => {
+    setSelectedProjectId(project.id);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProjectId(null);
+  };
+
+  const selectedProject = localizedProjects.find(
+    (project) => project.id === selectedProjectId
+  );
 
   useLayoutEffect(() => {
     activeProjectIndexRef.current = 0;
@@ -240,6 +282,7 @@ export default function Projects() {
                     total={localizedProjects.length}
                     cardRef={(el) => (cardsRef.current[index] = el)}
                     t={t}
+                    onOpenModal={handleOpenModal}
                   />
                 ))}
               </div>
@@ -297,6 +340,14 @@ export default function Projects() {
           </div>
         )}
       </div>
+
+      {/* Project Detail Modal */}
+      <ProjectDetailModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        project={selectedProject}
+        t={t}
+      />
     </div>
   );
 }
