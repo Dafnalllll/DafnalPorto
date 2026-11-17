@@ -16,6 +16,7 @@ export default function MobileMenu({ isOpen, onClose }) {
   }, []);
 
   const t = translations[lang] || translations.id;
+  const menuLabels = t.mobileMenu || translations.id.mobileMenu;
 
   const links = [
     { to: "#home", label: t.nav.home, icon: Home },
@@ -63,7 +64,7 @@ export default function MobileMenu({ isOpen, onClose }) {
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label="Mobile navigation"
+          aria-label={menuLabels.dialogLabel}
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
@@ -97,10 +98,10 @@ export default function MobileMenu({ isOpen, onClose }) {
             <header className="flex items-center justify-between border-b pb-5" style={{ borderColor: "var(--primary-border)" }}>
               <div>
                 <p className="text-sm font-bold tracking-[0.25em]" style={{ color: "var(--primary)" }}>
-                  DAF.SYS
+                  DAFNAL
                 </p>
                 <p className="mt-1 text-[10px] tracking-widest" style={{ color: "var(--text-muted)" }}>
-                  NAVIGATION // 0x01
+                  {menuLabels.heading}
                 </p>
               </div>
               <button
@@ -112,15 +113,15 @@ export default function MobileMenu({ isOpen, onClose }) {
                   borderColor: "var(--primary-border)",
                   color: "var(--primary)",
                 }}
-                aria-label="Close navigation"
+                aria-label={menuLabels.closeLabel}
               >
                 <X className="h-5 w-5" />
               </button>
             </header>
 
-            <nav className="flex flex-1 flex-col justify-center py-10" aria-label="Main navigation">
+          <nav className="flex flex-1 flex-col justify-center py-10" aria-label={menuLabels.mainNavigation}>
               <p className="mb-5 text-[10px] tracking-[0.3em]" style={{ color: "var(--text-subtle)" }}>
-                SELECT_DESTINATION
+                {menuLabels.selectDestination}
               </p>
               <div className="space-y-3">
                 {links.map((link, index) => {
@@ -157,7 +158,7 @@ export default function MobileMenu({ isOpen, onClose }) {
             </nav>
 
             <footer className="border-t pt-4 text-[10px] tracking-widest" style={{ borderColor: "var(--primary-border)", color: "var(--text-subtle)" }}>
-              SECURE CONNECTION // ALL SYSTEMS ONLINE
+              {menuLabels.footer}
             </footer>
           </div>
         </motion.div>

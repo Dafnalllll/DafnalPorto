@@ -1,6 +1,13 @@
 import { ExternalLink, Terminal } from "lucide-react";
 
-export default function ProjectCard({ project, index, total, cardRef, t, onOpenModal }) {
+export default function ProjectCard({
+  project,
+  index,
+  total,
+  cardRef,
+  t,
+  onOpenModal,
+}) {
   return (
     <div
       ref={cardRef}
@@ -14,10 +21,22 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
         willChange: "transform, opacity",
       }}
     >
-      <div className="absolute left-0 top-0 z-20 h-4 w-4 border-l-2 border-t-2" style={{ borderColor: "var(--primary)" }} />
-      <div className="absolute right-0 top-0 z-20 h-4 w-4 border-r-2 border-t-2" style={{ borderColor: "var(--primary)" }} />
-      <div className="absolute bottom-0 left-0 z-20 h-4 w-4 border-b-2 border-l-2" style={{ borderColor: "var(--primary)" }} />
-      <div className="absolute bottom-0 right-0 z-20 h-4 w-4 border-b-2 border-r-2" style={{ borderColor: "var(--primary)" }} />
+      <div
+        className="absolute left-0 top-0 z-20 h-4 w-4 border-l-2 border-t-2"
+        style={{ borderColor: "var(--primary)" }}
+      />
+      <div
+        className="absolute right-0 top-0 z-20 h-4 w-4 border-r-2 border-t-2"
+        style={{ borderColor: "var(--primary)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 z-20 h-4 w-4 border-b-2 border-l-2"
+        style={{ borderColor: "var(--primary)" }}
+      />
+      <div
+        className="absolute bottom-0 right-0 z-20 h-4 w-4 border-b-2 border-r-2"
+        style={{ borderColor: "var(--primary)" }}
+      />
 
       <div className="grid h-full grid-cols-1 gap-0 overflow-y-auto lg:grid-cols-2 lg:overflow-y-hidden">
         <div
@@ -37,7 +56,10 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
           />
 
           <div className="relative z-10 flex items-center justify-between gap-3">
-            <span className="text-xs font-mono tracking-widest uppercase" style={{ color: "var(--primary)" }}>
+            <span
+              className="text-xs font-mono tracking-widest uppercase"
+              style={{ color: "var(--primary)" }}
+            >
               // {t.projects.card.pageLeft} // {project.id}
             </span>
             <span
@@ -69,14 +91,14 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
-                <span className="px-4 py-2 rounded border border-[var(--primary)] bg-black/80 text-[var(--primary)] text-xs font-mono tracking-widest uppercase">
-                  {t.projectDetail?.dossier || "VIEW DOSSIER"}
-                </span>
-              </div>
+
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 text-xs font-mono text-white">
-                <span>{t.projects.card.category}: {project.category}</span>
-                <span>{t.projects.card.year}: {project.year}</span>
+                <span>
+                  {t.projects.card.category}: {project.category}
+                </span>
+                <span>
+                  {t.projects.card.year}: {project.year}
+                </span>
               </div>
             </div>
           </div>
@@ -85,8 +107,12 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
             className="relative z-10 flex items-center justify-between text-[10px] font-mono"
             style={{ color: "var(--project-card-subtle)" }}
           >
-            <span>{t.projects.card.coordinate}: 0x{project.id}8F</span>
-            <span>{t.projects.card.render}: {t.projects.card.renderMode}</span>
+            <span>
+              {t.projects.card.coordinate}: 0x{project.id}8F
+            </span>
+            <span>
+              {t.projects.card.render}: {t.projects.card.renderMode}
+            </span>
           </div>
         </div>
 
@@ -104,17 +130,27 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
                   color: "var(--primary)",
                 }}
               >
-                {t.projects.card.index}: {project.id} // {index + 1} {t.projects.card.of} {total}
+                {t.projects.card.index}: {project.id} // {index + 1}{" "}
+                {t.projects.card.of} {total}
               </span>
-              <span className="text-xs font-mono" style={{ color: "var(--project-card-subtle)" }}>
+              <span
+                className="text-xs font-mono"
+                style={{ color: "var(--project-card-subtle)" }}
+              >
                 {project.year}
               </span>
             </div>
 
-            <h3 className="text-2xl font-extrabold tracking-wider uppercase md:text-3xl" style={{ color: "var(--primary)" }}>
+            <h3
+              className="text-2xl font-extrabold tracking-wider uppercase md:text-3xl"
+              style={{ color: "var(--primary)" }}
+            >
               {project.title}
             </h3>
-            <p className="text-xs font-sans tracking-wide md:text-sm" style={{ color: "var(--project-card-muted)" }}>
+            <p
+              className="text-xs font-sans tracking-wide md:text-sm"
+              style={{ color: "var(--project-card-muted)" }}
+            >
               {project.subtitle}
             </p>
             <p className="pt-1 text-sm font-sans leading-relaxed">

@@ -10,11 +10,20 @@ export const translations = {
       systemError: "KESALAHAN_SISTEM // 404.LOG",
       securityLevel: "TINGKAT_AKSES: 0x404",
       sectorNotFound: "// ERROR: SEKTOR TIDAK DITEMUKAN //",
-      message: "Koordinat siber yang diminta tidak ditemukan di dalam jaringan ini.",
+      message:
+        "Koordinat siber yang diminta tidak ditemukan di dalam jaringan ini.",
       errorCode: "KODE_ERR: 0x404_HALAMAN_HILANG // DISARANKAN KEMBALI",
       returnHome: "Kembali ke Matriks",
       disconnected: "STATUS: TERPUTUS",
       themeActive: "TEMA: AKTIF",
+    },
+    mobileMenu: {
+      dialogLabel: "Navigasi seluler",
+      heading: "NAVIGASI",
+      closeLabel: "Tutup navigasi",
+      mainNavigation: "Navigasi utama",
+      selectDestination: "PILIH TUJUAN",
+      footer: "KONEKSI AMAN // SEMUA SISTEM ONLINE",
     },
     nav: { home: "Beranda", about: "Tentang", projects: "Proyek" },
     theme: {
@@ -85,22 +94,26 @@ export const translations = {
       items: {
         "01": {
           subtitle: "Sistem Kecerdasan Rapat dan Tugas berbasis AI",
-          description: "Sistem kecerdasan rapat untuk transkripsi otomatis, ringkasan instan, ekstraksi keputusan kunci, dan kategorisasi pembahasan mendalam berbasis LLM.",
+          description:
+            "Sistem kecerdasan rapat untuk transkripsi otomatis, ringkasan instan, ekstraksi keputusan kunci, dan kategorisasi pembahasan mendalam berbasis LLM.",
           status: "DIRILIS // PRODUKSI",
         },
         "02": {
           subtitle: "Klasifikasi Lesi Kulit",
-          description: "Prototipe klasifikasi lesi kulit dengan deep learning, citra dermoskopi dan fluoresensi, serta integrasi edge computing untuk deteksi dini.",
+          description:
+            "Prototipe klasifikasi lesi kulit dengan deep learning, citra dermoskopi dan fluoresensi, serta integrasi edge computing untuk deteksi dini.",
           status: "RISET // BETA",
         },
         "03": {
           subtitle: "Platform Kompetisi Teknologi",
-          description: "Platform kompetisi teknologi komprehensif untuk informasi lomba, pendaftaran peserta terintegrasi, dan sistem penilaian juri secara real-time.",
+          description:
+            "Platform kompetisi teknologi komprehensif untuk informasi lomba, pendaftaran peserta terintegrasi, dan sistem penilaian juri secara real-time.",
           status: "AKTIF // STABIL",
         },
         "04": {
           subtitle: "Pemantauan Lingkungan berbasis IoT",
-          description: "Konsep pemantauan suhu, kelembapan, kadar amonia, dan kualitas lingkungan kandang ternak berbasis IoT dengan dasbor analitik.",
+          description:
+            "Konsep pemantauan suhu, kelembapan, kadar amonia, dan kualitas lingkungan kandang ternak berbasis IoT dengan dasbor analitik.",
           status: "PROTOTIPE // PERANGKAT KERAS",
         },
       },
@@ -126,12 +139,12 @@ export const translations = {
       liveDemo: "Demo Langsung",
     },
     footer: {
-      tagline: "Antarmuka portofolio futuristik next-gen didukung oleh React & Anime.js. Menginisialisasi tautan saraf aman...",
+      tagline:
+        "Antarmuka portofolio futuristik next-gen didukung oleh React & Anime.js. Menginisialisasi tautan saraf aman...",
       nodes: "NODE_NAV",
       social: "SOSIAL",
-      status: "STATUS: TAUTAN AMAN MAPAN",
       rights: "HAK CIPTA DILINDUNGI.",
-    }
+    },
   },
   en: {
     dafnal: { start: "START", aria: "Click logo to proceed" },
@@ -144,11 +157,20 @@ export const translations = {
       systemError: "SYSTEM_ERROR // 404.LOG",
       securityLevel: "SECURITY_LEVEL: 0x404",
       sectorNotFound: "// ERROR: SECTOR NOT FOUND //",
-      message: "The requested cyber coordinate does not exist in this neural network.",
+      message:
+        "The requested cyber coordinate does not exist in this neural network.",
       errorCode: "ERR_CODE: 0x404_PAGE_MISSING // REDIRECT RECOMMENDED",
       returnHome: "Return to Matrix",
       disconnected: "STATUS: DISCONNECTED",
       themeActive: "THEME: ACTIVE",
+    },
+    mobileMenu: {
+      dialogLabel: "Mobile navigation",
+      heading: "NAVIGATION",
+      closeLabel: "Close navigation",
+      mainNavigation: "Main navigation",
+      selectDestination: "SELECT DESTINATION",
+      footer: "SECURE CONNECTION // ALL SYSTEMS ONLINE",
     },
     nav: { home: "Home", about: "About", projects: "Projects" },
     theme: {
@@ -219,22 +241,26 @@ export const translations = {
       items: {
         "01": {
           subtitle: "AI Meeting & Task Intelligence System",
-          description: "An intelligent meeting system for automatic transcription, instant summaries, key decision extraction, and in-depth discussion categorization powered by LLMs.",
+          description:
+            "An intelligent meeting system for automatic transcription, instant summaries, key decision extraction, and in-depth discussion categorization powered by LLMs.",
           status: "DEPLOYED // PROD",
         },
         "02": {
           subtitle: "Skin Lesion Classification",
-          description: "A skin lesion classification prototype using deep learning, dermoscopic and fluorescence imaging, and edge computing integration for early detection.",
+          description:
+            "A skin lesion classification prototype using deep learning, dermoscopic and fluorescence imaging, and edge computing integration for early detection.",
           status: "RESEARCH // BETA",
         },
         "03": {
           subtitle: "Technology Competition Platform",
-          description: "A comprehensive technology competition platform for event information, integrated participant registration, and real-time jury scoring.",
+          description:
+            "A comprehensive technology competition platform for event information, integrated participant registration, and real-time jury scoring.",
           status: "ACTIVE // STABLE",
         },
         "04": {
           subtitle: "IoT Environmental Monitoring",
-          description: "An IoT concept for monitoring temperature, humidity, ammonia levels, and livestock barn conditions with an analytics dashboard.",
+          description:
+            "An IoT concept for monitoring temperature, humidity, ammonia levels, and livestock barn conditions with an analytics dashboard.",
           status: "PROTOTYPE // HARDWARE",
         },
       },
@@ -260,12 +286,153 @@ export const translations = {
       liveDemo: "Live Demo",
     },
     footer: {
-      tagline: "Next-gen futuristic portfolio interface powered by React & Anime.js. Initializing secure neural link connections...",
+      tagline:
+        "Next-gen futuristic portfolio interface powered by React & Anime.js. Initializing secure neural link connections...",
       nodes: "NAV_NODES",
       social: "SOCIAL",
-      status: "STATUS: SECURE CONNECTION ESTABLISHED",
       rights: "ALL RIGHTS RESERVED.",
-    }
+    },
+  },
+  ko: {
+    dafnal: { start: "시작", aria: "로고를 클릭하여 계속하기" },
+    loader: {
+      eyebrow: "DAFNAL // 포트폴리오",
+      status: "신호 동기화 중",
+      aria: "페이지 로딩 중",
+    },
+    notFound: {
+      systemError: "시스템_오류 // 404.LOG",
+      securityLevel: "보안_등급: 0x404",
+      sectorNotFound: "// 오류: 섹터를 찾을 수 없습니다 //",
+      message: "요청한 사이버 좌표가 이 신경망에 존재하지 않습니다.",
+      errorCode: "오류_코드: 0x404_페이지_없음 // 홈으로 이동 권장",
+      returnHome: "매트릭스로 돌아가기",
+      disconnected: "상태: 연결 끊김",
+      themeActive: "테마: 활성",
+    },
+    mobileMenu: {
+      dialogLabel: "모바일 내비게이션",
+      heading: "내비게이션",
+      closeLabel: "내비게이션 닫기",
+      mainNavigation: "주요 내비게이션",
+      selectDestination: "목적지 선택",
+      footer: "보안 연결 // 모든 시스템 온라인",
+    },
+    nav: { home: "홈", about: "소개", projects: "프로젝트" },
+    theme: {
+      select: "테마 선택",
+      switch: "테마 변경",
+      white: "순백",
+      black: "순흑",
+      cyan: "사이버 시안",
+      emerald: "매트릭스 에메랄드",
+      purple: "네온 퍼플",
+      amber: "솔라 앰버",
+      rose: "레이저 로즈",
+    },
+    hero: {
+      status: "시스템_준비완료",
+      title: "Rizki Dafa Naldi",
+      subtitle: "크리에이티브 프런트엔드 엔지니어 // 레트로 퓨처리즘 설계자",
+      desc: "React, GSAP와 시네마틱한 레트로 퓨처리즘 미학으로 몰입감 있고 성능이 뛰어난 웹 경험을 만듭니다.",
+      explore: "프로젝트 둘러보기",
+      profile: "개발자 프로필",
+    },
+    about: {
+      section: "개발자 프로필 및 사양",
+      status: "상태: 활성",
+      heading: "디지털 현실을 설계합니다",
+      bio: "저는 Rizki Dafa Naldi입니다. 레트로 퓨처리즘 터미널 미학과 고성능 최신 웹 기술을 결합하는 프런트엔드 엔지니어입니다.",
+      spec: "전문 분야",
+      specVal: "React 및 애니메이션",
+      philosophy: "핵심 철학",
+      philosophyVal: "시네마틱 UX",
+      sysLog: "시스템_사양.LOG",
+      framework: "프레임워크",
+      styling: "스타일링",
+      animation: "애니메이션",
+      deployment: "배포",
+    },
+    projects: {
+      section: "시네마틱 프로젝트 쇼케이스",
+      title: "시네마틱 작품",
+      desc: "차세대 디지털 아티팩트, 지능형 신경 시스템, 미래형 아키텍처를 스크롤 기반 3D 북 플립으로 선보입니다.",
+      filter: "필터:",
+      all: "전체",
+      source: "소스 코드",
+      scrollPrompt: "스크롤하여 페이지 넘기기",
+      nextPage: "다음 페이지:",
+      finalPage: "마지막 페이지 // 계속 스크롤하세요",
+      bookMode: "북 모드",
+      gridMode: "그리드 모드",
+      categories: {
+        "AI / Machine Learning": "AI / 머신러닝",
+        Competition: "대회",
+        IoT: "IoT",
+        Web: "웹",
+      },
+      card: {
+        pageLeft: "책_왼쪽_페이지",
+        category: "카테고리",
+        year: "연도",
+        coordinate: "좌표",
+        render: "렌더링",
+        renderMode: "3D_북_모드",
+        index: "색인",
+        of: "/",
+        sector: "분야",
+        empty: "이 분야에서 프로젝트를 찾을 수 없습니다.",
+        details: "상세 정보",
+      },
+      items: {
+        "01": {
+          subtitle: "AI 회의 및 업무 지능 시스템",
+          description: "LLM을 활용해 회의를 자동으로 전사하고 요약하며, 핵심 결정 사항을 추출하고 논의 내용을 세부 분류하는 지능형 시스템입니다.",
+          status: "배포 완료 // 운영 중",
+        },
+        "02": {
+          subtitle: "피부 병변 분류",
+          description: "딥러닝, 피부경 및 형광 이미징, 엣지 컴퓨팅을 결합해 조기 발견을 돕는 피부 병변 분류 프로토타입입니다.",
+          status: "연구 // 베타",
+        },
+        "03": {
+          subtitle: "기술 경진대회 플랫폼",
+          description: "대회 정보, 통합 참가 신청, 심사위원의 실시간 채점 기능을 제공하는 종합 기술 경진대회 플랫폼입니다.",
+          status: "활성 // 안정",
+        },
+        "04": {
+          subtitle: "IoT 환경 모니터링",
+          description: "분석 대시보드와 함께 축사 온도, 습도, 암모니아 농도 및 환경을 모니터링하는 IoT 콘셉트입니다.",
+          status: "프로토타입 // 하드웨어",
+        },
+      },
+    },
+    projectDetail: {
+      dossier: "프로젝트 문서",
+      status: "상태",
+      coordinate: "좌표",
+      year: "연도",
+      overview: "프로젝트 개요 및 목표",
+      problem: "문제 정의",
+      solution: "제안된 솔루션",
+      objectives: "핵심 목표",
+      architecture: "기술 아키텍처 및 구성 요소",
+      workflow: "구현 워크플로",
+      gallery: "스크린샷 및 이미지 갤러리",
+      contributions: "담당 역할 및 기여",
+      challenges: "도전 과제 및 배운 점",
+      evaluation: "평가 지표 및 결과",
+      findings: "주요 결과",
+      systemId: "시스템_ID",
+      sourceCode: "소스 코드",
+      liveDemo: "라이브 데모",
+    },
+    footer: {
+      tagline: "React와 Anime.js로 구현한 차세대 미래형 포트폴리오 인터페이스입니다. 보안 신경망 연결을 초기화하는 중...",
+      nodes: "내비게이션_노드",
+      social: "소셜",
+      rights: "모든 권리 보유.",
+    },
   },
   nl: {
     dafnal: { start: "START", aria: "Klik op het logo om door te gaan" },
@@ -283,6 +450,14 @@ export const translations = {
       returnHome: "Terug naar de Matrix",
       disconnected: "STATUS: VERBINDING VERBROKEN",
       themeActive: "THEMA: ACTIEF",
+    },
+    mobileMenu: {
+      dialogLabel: "Mobiele navigatie",
+      heading: "NAVIGATIE",
+      closeLabel: "Navigatie sluiten",
+      mainNavigation: "Hoofdnavigatie",
+      selectDestination: "KIES EEN BESTEMMING",
+      footer: "BEVEILIGDE VERBINDING // ALLE SYSTEMEN ONLINE",
     },
     nav: { home: "Home", about: "Over ons", projects: "Projecten" },
     theme: {
@@ -353,22 +528,26 @@ export const translations = {
       items: {
         "01": {
           subtitle: "AI-systeem voor vergaderingen en taken",
-          description: "Een intelligent vergadersysteem voor automatische transcriptie, directe samenvattingen, extractie van belangrijke beslissingen en diepgaande categorisering van gesprekken met LLM's.",
+          description:
+            "Een intelligent vergadersysteem voor automatische transcriptie, directe samenvattingen, extractie van belangrijke beslissingen en diepgaande categorisering van gesprekken met LLM's.",
           status: "GEDEPLOYEERD // PROD",
         },
         "02": {
           subtitle: "Classificatie van huidlaesies",
-          description: "Een prototype voor classificatie van huidlaesies met deep learning, dermoscopische en fluorescentiebeelden en edge computing voor vroege detectie.",
+          description:
+            "Een prototype voor classificatie van huidlaesies met deep learning, dermoscopische en fluorescentiebeelden en edge computing voor vroege detectie.",
           status: "ONDERZOEK // BÈTA",
         },
         "03": {
           subtitle: "Platform voor technologiecompetities",
-          description: "Een compleet platform voor technologiecompetities met wedstrijdinformatie, geïntegreerde deelnemersregistratie en realtime juryscores.",
+          description:
+            "Een compleet platform voor technologiecompetities met wedstrijdinformatie, geïntegreerde deelnemersregistratie en realtime juryscores.",
           status: "ACTIEF // STABIEL",
         },
         "04": {
           subtitle: "IoT-monitoring van de omgeving",
-          description: "Een IoT-concept voor het monitoren van temperatuur, luchtvochtigheid, ammoniakgehalte en stalomstandigheden met een analytisch dashboard.",
+          description:
+            "Een IoT-concept voor het monitoren van temperatuur, luchtvochtigheid, ammoniakgehalte en stalomstandigheden met een analytisch dashboard.",
           status: "PROTOTYPE // HARDWARE",
         },
       },
@@ -394,12 +573,12 @@ export const translations = {
       liveDemo: "Live Demo",
     },
     footer: {
-      tagline: "Next-gen futuristische portfolio-interface aangedreven door React & Anime.js. Veilige neurale linkverbindingen initialiseren...",
+      tagline:
+        "Next-gen futuristische portfolio-interface aangedreven door React & Anime.js. Veilige neurale linkverbindingen initialiseren...",
       nodes: "NAVIGATIE_NODES",
       social: "SOCIALE_MEDIA",
-      status: "STATUS: VEILIGE VERBINDING TOT STAND GEBRACHT",
       rights: "ALLE RECHTE VOORBEHOUDEN.",
-    }
+    },
   },
   ja: {
     dafnal: { start: "スタート", aria: "ロゴをクリックして続行" },
@@ -412,11 +591,21 @@ export const translations = {
       systemError: "システムエラー // 404.LOG",
       securityLevel: "セキュリティレベル: 0x404",
       sectorNotFound: "// エラー: セクターが見つかりません //",
-      message: "指定されたサイバー座標は、このニューラルネットワークに存在しません。",
-      errorCode: "エラーコード: 0x404_ページが見つかりません // ホームへの移動を推奨",
+      message:
+        "指定されたサイバー座標は、このニューラルネットワークに存在しません。",
+      errorCode:
+        "エラーコード: 0x404_ページが見つかりません // ホームへの移動を推奨",
       returnHome: "マトリックスに戻る",
       disconnected: "状態: 切断中",
       themeActive: "テーマ: 有効",
+    },
+    mobileMenu: {
+      dialogLabel: "モバイルナビゲーション",
+      heading: "ナビゲーション",
+      closeLabel: "ナビゲーションを閉じる",
+      mainNavigation: "メインナビゲーション",
+      selectDestination: "移動先を選択",
+      footer: "安全な接続 // すべてのシステムがオンライン",
     },
     nav: { home: "ホーム", about: "プロフィール", projects: "プロジェクト" },
     theme: {
@@ -433,7 +622,8 @@ export const translations = {
     hero: {
       status: "システム準備完了",
       title: "Rizki Dafa Naldi",
-      subtitle: "クリエイティブ・フロントエンドエンジニア // レトロフューチャリスティック・アーキテクト",
+      subtitle:
+        "クリエイティブ・フロントエンドエンジニア // レトロフューチャリスティック・アーキテクト",
       desc: "React、GSAP、そしてシネマティックなレトロフューチャー美学を駆使し、没入感のある高性能なウェブ体験を創造します。",
       explore: "プロジェクトを見る",
       profile: "オペレータープロフィール",
@@ -487,22 +677,26 @@ export const translations = {
       items: {
         "01": {
           subtitle: "AI会議・タスク管理システム",
-          description: "LLMを活用し、会議の自動文字起こし、即時要約、重要な決定事項の抽出、議論内容の詳細な分類を行うシステムです。",
+          description:
+            "LLMを活用し、会議の自動文字起こし、即時要約、重要な決定事項の抽出、議論内容の詳細な分類を行うシステムです。",
           status: "公開済み // 本番環境",
         },
         "02": {
           subtitle: "皮膚病変の分類",
-          description: "深層学習、ダーモスコピー画像と蛍光画像、エッジコンピューティングを組み合わせた早期検出向け皮膚病変分類プロトタイプです。",
+          description:
+            "深層学習、ダーモスコピー画像と蛍光画像、エッジコンピューティングを組み合わせた早期検出向け皮膚病変分類プロトタイプです。",
           status: "研究 // ベータ",
         },
         "03": {
           subtitle: "テクノロジーコンテストプラットフォーム",
-          description: "大会情報、参加者登録、審査員によるリアルタイム採点を統合した総合テクノロジーコンテストプラットフォームです。",
+          description:
+            "大会情報、参加者登録、審査員によるリアルタイム採点を統合した総合テクノロジーコンテストプラットフォームです。",
           status: "稼働中 // 安定",
         },
         "04": {
           subtitle: "IoT環境モニタリング",
-          description: "分析ダッシュボードを備え、温度、湿度、アンモニア濃度、畜舎環境を監視するIoTコンセプトです。",
+          description:
+            "分析ダッシュボードを備え、温度、湿度、アンモニア濃度、畜舎環境を監視するIoTコンセプトです。",
           status: "プロトタイプ // ハードウェア",
         },
       },
@@ -528,12 +722,12 @@ export const translations = {
       liveDemo: "ライブデモ",
     },
     footer: {
-      tagline: "React & Anime.jsを搭載した次世代レトロフューチャーポートフォリオインターフェース。安全なニューラルリンクを初期化中...",
+      tagline:
+        "React & Anime.jsを搭載した次世代レトロフューチャーポートフォリオインターフェース。安全なニューラルリンクを初期化中...",
       nodes: "ナビゲーションノード",
       social: "ソーシャルメディア",
-      status: "ステータス：安全な接続が確立されました",
       rights: "全著作権所有。",
-    }
+    },
   },
   de: {
     dafnal: { start: "START", aria: "Logo anklicken zum Fortfahren" },
@@ -546,11 +740,20 @@ export const translations = {
       systemError: "SYSTEMFEHLER // 404.LOG",
       securityLevel: "SICHERHEITSSTUFE: 0x404",
       sectorNotFound: "// FEHLER: SEKTOR NICHT GEFUNDEN //",
-      message: "Die angeforderte Cyber-Koordinate existiert in diesem neuronalen Netzwerk nicht.",
+      message:
+        "Die angeforderte Cyber-Koordinate existiert in diesem neuronalen Netzwerk nicht.",
       errorCode: "FEHLERCODE: 0x404_SEITE_FEHLT // WEITERLEITUNG EMPFOHLEN",
       returnHome: "Zurück zur Matrix",
       disconnected: "STATUS: GETRENNT",
       themeActive: "THEMA: AKTIV",
+    },
+    mobileMenu: {
+      dialogLabel: "Mobile Navigation",
+      heading: "NAVIGATION",
+      closeLabel: "Navigation schließen",
+      mainNavigation: "Hauptnavigation",
+      selectDestination: "ZIEL AUSWÄHLEN",
+      footer: "SICHERE VERBINDUNG // ALLE SYSTEME ONLINE",
     },
     nav: { home: "Startseite", about: "Über mich", projects: "Projekte" },
     theme: {
@@ -621,22 +824,26 @@ export const translations = {
       items: {
         "01": {
           subtitle: "KI-System für Meetings und Aufgaben",
-          description: "Ein intelligentes Meeting-System für automatische Transkription, sofortige Zusammenfassungen, Extraktion wichtiger Entscheidungen und detaillierte Gesprächskategorisierung mit LLMs.",
+          description:
+            "Ein intelligentes Meeting-System für automatische Transkription, sofortige Zusammenfassungen, Extraktion wichtiger Entscheidungen und detaillierte Gesprächskategorisierung mit LLMs.",
           status: "BEREITGESTELLT // PRODUKTION",
         },
         "02": {
           subtitle: "Klassifizierung von Hautläsionen",
-          description: "Ein Prototyp zur Klassifizierung von Hautläsionen mit Deep Learning, Dermoskopie- und Fluoreszenzbildern sowie Edge Computing zur Früherkennung.",
+          description:
+            "Ein Prototyp zur Klassifizierung von Hautläsionen mit Deep Learning, Dermoskopie- und Fluoreszenzbildern sowie Edge Computing zur Früherkennung.",
           status: "FORSCHUNG // BETA",
         },
         "03": {
           subtitle: "Plattform für Technologiewettbewerbe",
-          description: "Eine umfassende Plattform mit Wettbewerbsinformationen, integrierter Teilnehmerregistrierung und Bewertung durch die Jury in Echtzeit.",
+          description:
+            "Eine umfassende Plattform mit Wettbewerbsinformationen, integrierter Teilnehmerregistrierung und Bewertung durch die Jury in Echtzeit.",
           status: "AKTIV // STABIL",
         },
         "04": {
           subtitle: "IoT-Umgebungsüberwachung",
-          description: "Ein IoT-Konzept zur Überwachung von Temperatur, Luftfeuchtigkeit, Ammoniakgehalt und Stallbedingungen mit einem Analyse-Dashboard.",
+          description:
+            "Ein IoT-Konzept zur Überwachung von Temperatur, Luftfeuchtigkeit, Ammoniakgehalt und Stallbedingungen mit einem Analyse-Dashboard.",
           status: "PROTOTYP // HARDWARE",
         },
       },
@@ -662,11 +869,11 @@ export const translations = {
       liveDemo: "Live-Demo",
     },
     footer: {
-      tagline: "Zukunftsweisende Portfolio-Schnittstelle, angetrieben von React & Anime.js. Sichere Neurale-Link-Verbindungen werden initialisiert...",
+      tagline:
+        "Zukunftsweisende Portfolio-Schnittstelle, angetrieben von React & Anime.js. Sichere Neurale-Link-Verbindungen werden initialisiert...",
       nodes: "NAVIGATION_NODES",
       social: "SOZIALE_MEDIEN",
-      status: "STATUS: SICHERE VERBINDUNG HERGESTELLT",
       rights: "ALLE RECHTE VORBEHALTEN.",
-    }
-  }
+    },
+  },
 };

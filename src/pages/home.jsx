@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Terminal, Cpu, User, Code2, ArrowDown } from "lucide-react";
+import { Terminal, User, Code2, ArrowDown } from "lucide-react";
 import Projects from "./projects";
 import { translations } from "../data/translations";
+import SectionHeading from "../components/SectionHeading";
 
 export default function Home() {
   const heroRef = useRef(null);
@@ -27,41 +28,21 @@ export default function Home() {
         className="min-h-screen flex flex-col items-center justify-center relative px-6 py-20 text-center"
       >
         <div className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border font-mono text-xs tracking-widest uppercase"
-               style={{ backgroundColor: "var(--primary-bg)", borderColor: "var(--primary-border)", color: "var(--primary)" }}>
-            <Cpu className="w-3.5 h-3.5 animate-pulse" />
-            <span>SEC.01 // {t.hero.status}</span>
-          </div>
-
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold font-mono tracking-wider uppercase"
-            style={{ color: "var(--text-main)" }}
           >
-            {t.hero.title}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl font-mono tracking-widest uppercase"
-            style={{ color: "var(--primary)" }}
-          >
-            {t.hero.subtitle}
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="max-w-2xl mx-auto text-sm md:text-base font-mono leading-relaxed"
-            style={{ color: "var(--text-muted)" }}
-          >
-            {t.hero.desc}
-          </motion.p>
+            <SectionHeading
+              eyebrow={`SEC.01 // ${t.hero.status}`}
+              title={t.hero.title}
+              subheading={t.hero.subtitle}
+              description={t.hero.desc}
+              align="center"
+              size="hero"
+              as="h1"
+            />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -117,21 +98,22 @@ export default function Home() {
         className="min-h-screen flex flex-col justify-center relative px-6 py-24 max-w-6xl mx-auto w-full"
       >
         <div className="space-y-12">
-          <div className="border-b pb-4 flex items-center justify-between" style={{ borderColor: "var(--primary-border)" }}>
-            <span className="font-mono text-xs tracking-[0.25em]" style={{ color: "var(--primary)" }}>
+          <div className="section-heading__top">
+            <span className="section-heading__eyebrow">
+              <span className="section-heading__marker" aria-hidden="true" />
               // SEC.02 — {t.about.section}
             </span>
-            <span className="font-mono text-xs tracking-widest" style={{ color: "var(--text-subtle)" }}>
+            <span className="section-heading__meta">
               {t.about.status}
             </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6 font-mono">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-wider uppercase" style={{ color: "var(--text-main)" }}>
+              <h2 className="section-heading__title">
                 {t.about.heading}
               </h2>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              <p className="section-heading__description">
                 {t.about.bio}
               </p>
               <div className="grid grid-cols-2 gap-4 pt-4">

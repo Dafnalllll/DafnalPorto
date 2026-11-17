@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { animate, createTimeline, stagger } from "animejs";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { Mail, Terminal, Cpu, Shield, Globe } from "lucide-react";
+import { Mail, Terminal, Cpu, Globe } from "lucide-react";
 import { translations } from "../data/translations";
 
 const socials = [
@@ -18,12 +18,18 @@ const socials = [
     href: "https://www.instagram.com/daf_nal/",
     icon: FaInstagram,
   },
-  { label: "Email", href: "mailto:rizkidafa@example.com", icon: Mail },
+  {
+    label: "Email",
+    href: "https://mail.google.com/mail/?view=cm&fs=1&to=daffanaldi373%40gmail.com",
+    icon: Mail,
+  },
 ];
 
 export default function Footer() {
   const footerRef = useRef(null);
-  const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("dafa_portfolio_lang") || "id",
+  );
 
   useEffect(() => {
     function handleLangChange() {
@@ -153,13 +159,7 @@ export default function Footer() {
                 className="text-sm font-bold tracking-widest transition-colors"
                 style={{ color: "var(--primary)" }}
               >
-                DAF.SYS
-              </span>
-              <span
-                className="text-[10px] tracking-wider"
-                style={{ color: "var(--primary)" }}
-              >
-                PORTFOLIO // v2.0
+                DAFNAL
               </span>
             </div>
           </a>
@@ -203,7 +203,7 @@ export default function Footer() {
             className="flex items-center gap-2 text-xs font-semibold tracking-wider"
             style={{ color: "var(--primary)" }}
           >
-            <Shield className="w-4 h-4" style={{ color: "var(--primary)" }} />
+            <Globe className="w-4 h-4" style={{ color: "var(--primary)" }} />
             <span>{t.footer.social}</span>
           </div>
           <div className="flex items-center space-x-3">
@@ -231,13 +231,17 @@ export default function Footer() {
               );
             })}
           </div>
-          <div
-            className="text-[10px] pt-2 flex items-center gap-1.5"
-            style={{ color: "var(--text-subtle)" }}
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=daffanaldi373%40gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-xs transition-colors hover:text-[var(--primary)]"
+            style={{ color: "var(--text-muted)" }}
+            aria-label="Write an email to daffanaldi373@gmail.com"
           >
-            <Globe className="w-3 h-3" style={{ color: "var(--primary)" }} />
-            <span>{t.footer.status}</span>
-          </div>
+            <Mail className="h-3.5 w-3.5" style={{ color: "var(--primary)" }} />
+            <span>daffanaldi373@gmail.com</span>
+          </a>
         </div>
       </div>
 

@@ -5,8 +5,9 @@ const languages = [
   { id: "id", label: "ID // INDONESIA", flag: "id" },
   { id: "en", label: "EN // ENGLISH", flag: "gb" },
   { id: "nl", label: "NL // NEDERLANDS", flag: "nl" },
-  { id: "ja", label: "JA // 日本語", flag: "jp" },
   { id: "de", label: "DE // DEUTSCH", flag: "de" },
+  { id: "ja", label: "JA // 日本語", flag: "jp" },
+  { id: "ko", label: "KO // 한국어", flag: "kr" },
 ];
 
 function CountryFlag({ country }) {
@@ -45,6 +46,14 @@ function CountryFlag({ country }) {
       <>
         <path fill="#fff" d="M0 0h24v14H0z" />
         <circle cx="12" cy="7" r="4" fill="#dc2626" />
+      </>
+    ),
+    kr: (
+      <>
+        <path fill="#fff" d="M0 0h24v14H0z" />
+        <path fill="#cd2e3a" d="M12 3a4 4 0 0 1 0 8 2 2 0 0 0 0-4 2 2 0 0 1 0-4" />
+        <path fill="#0047a0" d="M12 11a4 4 0 0 1 0-8 2 2 0 0 0 0 4 2 2 0 0 1 0 4" />
+        <path stroke="#111" strokeWidth="1.25" d="M3 2h5M3 4h5M16 10h5M16 12h5M3 10h2m1 0h2M3 12h2m1 0h2M16 2h2m1 0h2M16 4h2m1 0h2" />
       </>
     ),
     de: (

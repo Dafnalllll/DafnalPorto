@@ -7,7 +7,7 @@ import {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ChevronDown,
   ChevronLeft,
@@ -22,8 +22,40 @@ import ProjectFilters from "../components/projects/ProjectFilters";
 import ProjectCard from "../components/projects/ProjectCard";
 import ProjectGridCard from "../components/projects/ProjectGridCard";
 import ProjectDetailModal from "../components/projects/ProjectDetailModal";
+import SectionHeading from "../components/SectionHeading";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const mobilePageTurnVariants = {
+  enter: (direction) => ({
+    rotateY: direction > 0 ? 76 : -76,
+    x: direction > 0 ? "10%" : "-10%",
+    opacity: 0.25,
+    transformOrigin: direction > 0 ? "left center" : "right center",
+    zIndex: direction > 0 ? 0 : 2,
+  }),
+  center: {
+    rotateY: 0,
+    x: 0,
+    opacity: 1,
+    zIndex: 1,
+    transition: { duration: 0.78, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: (direction) => ({
+    rotateY: direction > 0 ? -76 : 76,
+    x: direction > 0 ? "-10%" : "10%",
+    opacity: 0,
+    transformOrigin: direction > 0 ? "left center" : "right center",
+    zIndex: direction > 0 ? 2 : 0,
+    transition: { duration: 0.62, ease: [0.55, 0.06, 0.68, 0.19] },
+  }),
+};
+
+const mobilePageFadeVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.15 } },
+};
 
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -33,6 +65,8 @@ export default function Projects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [pageTurnDirection, setPageTurnDirection] = useState(1);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -108,10 +142,12 @@ export default function Projects() {
   };
 
   const handlePrevProject = () => {
+    setPageTurnDirection(-1);
     setActiveProjectIndex((prev) => (prev > 0 ? prev - 1 : localizedProjects.length - 1));
   };
 
   const handleNextProject = () => {
+    setPageTurnDirection(1);
     setActiveProjectIndex((prev) => (prev < localizedProjects.length - 1 ? prev + 1 : 0));
   };
 
@@ -120,10 +156,13 @@ export default function Projects() {
   );
 
   useLayoutEffect(() => {
-    if (viewMode !== "book" || window.innerWidth < 768) return; // Skip GSAP if grid mode or mobile
+    if (viewMode !== "book") return;
 
     activeProjectIndexRef.current = 0;
     setActiveProjectIndex(0);
+    setPageTurnDirection(1);
+
+    if (window.innerWidth < 768) return; // Skip GSAP on mobile
 
     const ctx = gsap.context(() => {
       const cards = cardsRef.current.filter(Boolean);
@@ -251,26 +290,20 @@ export default function Projects() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-12">
-          <div className="flex items-center gap-2 text-xs font-semibold tracking-widest mb-3" style={{ color: "var(--primary)" }}>
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "var(--primary)" }}></span>
-            <span>{t.projects.section || "SYSTEMS // PORTFOLIO_ARCHIVE"}</span>
-          </div>
-
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-mono uppercase"
-                style={{ color: "var(--text-main)" }}
-              >
-                {t.projects.title || "Featured Projects"}
-              </motion.h1>
-              <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mt-3 font-sans">
-                {t.projects.desc || "A curated showcase of high-performance web applications, intelligent agents, and digital architectures."}
-              </p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="min-w-0 flex-1"
+            >
+              <SectionHeading
+                eyebrow={t.projects.section || "SYSTEMS // PORTFOLIO_ARCHIVE"}
+                title={t.projects.title || "Featured Projects"}
+                description={t.projects.desc || "A curated showcase of high-performance web applications, intelligent agents, and digital architectures."}
+                as="h1"
+              />
+            </motion.div>
 
             {/* View Mode Switcher (Book Mode vs Grid Mode) */}
             <div className="flex items-center gap-2 shrink-0">
@@ -324,24 +357,55 @@ export default function Projects() {
                 className="relative w-full max-w-5xl h-[min(580px,calc(100dvh-152px))] min-h-[440px] [perspective:1800px]"
               >
                 <div className="relative z-10 w-full h-full" style={{ transformStyle: "preserve-3d" }}>
-                  {localizedProjects.map((project, index) => (
-                    <div
-                      key={project.id}
-                      ref={(el) => (cardsRef.current[index] = el)}
-                      className="absolute inset-0 transition-opacity duration-300"
-                      style={{
-                        display: isMobile ? (index === activeProjectIndex ? "flex" : "none") : "flex",
-                      }}
+                  {isMobile ? (
+                    <AnimatePresence
+                      initial={false}
+                      mode="sync"
+                      custom={pageTurnDirection}
                     >
-                      <ProjectCard
-                        project={project}
-                        index={index}
-                        total={localizedProjects.length}
-                        t={t}
-                        onOpenModal={handleOpenModal}
-                      />
-                    </div>
-                  ))}
+                      <motion.div
+                        key={localizedProjects[activeProjectIndex].id}
+                        custom={pageTurnDirection}
+                        variants={
+                          prefersReducedMotion
+                            ? mobilePageFadeVariants
+                            : mobilePageTurnVariants
+                        }
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        className="absolute inset-0"
+                        style={{
+                          transformStyle: "preserve-3d",
+                          backfaceVisibility: "hidden",
+                        }}
+                      >
+                        <ProjectCard
+                          project={localizedProjects[activeProjectIndex]}
+                          index={activeProjectIndex}
+                          total={localizedProjects.length}
+                          t={t}
+                          onOpenModal={handleOpenModal}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+                  ) : (
+                    localizedProjects.map((project, index) => (
+                      <div
+                        key={project.id}
+                        ref={(el) => (cardsRef.current[index] = el)}
+                        className="absolute inset-0"
+                      >
+                        <ProjectCard
+                          project={project}
+                          index={index}
+                          total={localizedProjects.length}
+                          t={t}
+                          onOpenModal={handleOpenModal}
+                        />
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 

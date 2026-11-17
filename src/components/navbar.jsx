@@ -12,7 +12,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("#home");
-  const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("dafa_portfolio_lang") || "id",
+  );
   const location = useLocation();
   const navRef = useRef(null);
 
@@ -83,7 +85,7 @@ export default function Navbar() {
           duration: 500,
           delay: stagger(100),
         },
-        "-=400"
+        "-=400",
       );
     } catch (e) {
       console.error("Anime.js animation error:", e);
@@ -132,6 +134,12 @@ export default function Navbar() {
             : "0 0 15px rgba(0,0,0,0.2)",
         }}
       >
+        <div className="navbar-particles" aria-hidden="true">
+          {Array.from({ length: 8 }, (_, index) => (
+            <span key={index} className="navbar-particle" />
+          ))}
+        </div>
+
         {/* Scanline effect */}
         <div
           className="absolute inset-0 pointer-events-none opacity-25 rounded-xl"
@@ -150,38 +158,13 @@ export default function Navbar() {
             className="group flex items-center gap-3 cursor-pointer"
             style={{ color: "var(--primary)" }}
           >
-            <div
-              className="relative w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
-              style={{
-                backgroundColor: "var(--surface-raised)",
-                border: "1px solid var(--primary-border)",
-                boxShadow: "0 0 10px var(--primary-bg)",
-              }}
-            >
+            <div className="relative  flex items-center justify-center transition-all duration-300">
               <img
                 src="/dafnal.webp"
                 alt="Dafnal Logo"
-                className="w-6 h-6"
+                className="w-16 h-16"
                 style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
               />
-              <div
-                className="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-ping"
-                style={{ backgroundColor: "var(--primary)" }}
-              ></div>
-            </div>
-            <div className="flex flex-col">
-              <span
-                className="text-sm font-bold tracking-widest transition-colors"
-                style={{ color: "var(--primary)" }}
-              >
-                DAF.SYS
-              </span>
-              <span
-                className="text-[10px] tracking-wider"
-                style={{ color: "var(--text-muted)" }}
-              >
-                ONLINE // 0x01
-              </span>
             </div>
           </a>
 
