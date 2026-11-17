@@ -20,6 +20,8 @@ export default function NotFound() {
     () => localStorage.getItem("dafa_portfolio_lang") || "id"
   );
   const themeLabels = translations[currentLang]?.theme || translations.id.theme;
+  const notFoundLabels =
+    translations[currentLang]?.notFound || translations.id.notFound;
 
   useEffect(() => {
     function handleLanguageChange() {
@@ -211,11 +213,11 @@ export default function NotFound() {
             <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
             <span className="text-xs font-semibold tracking-wider ml-2 flex items-center gap-1.5" style={{ color: "var(--text-muted)" }}>
               <Terminal className="w-3.5 h-3.5" style={{ color: "var(--primary)" }} />
-              SYSTEM_ERROR // 404.LOG
+              {notFoundLabels.systemError}
             </span>
           </div>
           <div className="text-xs font-mono" style={{ color: "var(--primary)" }}>
-            SEC_LVL: 0x404
+            {notFoundLabels.securityLevel}
           </div>
         </div>
 
@@ -242,15 +244,15 @@ export default function NotFound() {
             404
           </h1>
           <div className="text-xs tracking-[0.3em] uppercase mb-6" style={{ color: "var(--text-muted)" }}>
-            // ERROR: SECTOR NOT FOUND //
+            {notFoundLabels.sectorNotFound}
           </div>
 
           <div className="cyber-line w-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent my-4"></div>
 
           <div className="space-y-2 mb-8 max-w-md mx-auto text-sm md:text-base" style={{ color: "var(--text-main)" }}>
-            <p>The requested cyber coordinate does not exist in this neural network.</p>
+            <p>{notFoundLabels.message}</p>
             <p className="text-xs font-mono" style={{ color: "var(--text-subtle)" }}>
-              ERR_CODE: 0x404_PAGE_MISSING // REDIRECT RECOMMENDED
+              {notFoundLabels.errorCode}
             </p>
           </div>
 
@@ -269,7 +271,7 @@ export default function NotFound() {
               }}
             >
               <Home className="w-4 h-4" />
-              Return to Matrix
+              {notFoundLabels.returnHome}
             </Link>
           </div>
         </div>
@@ -283,8 +285,8 @@ export default function NotFound() {
             borderColor: "var(--primary-border)",
           }}
         >
-          <span>STATUS: DISCONNECTED</span>
-          <span style={{ color: "var(--primary)" }}>THEME: ACTIVE</span>
+          <span>{notFoundLabels.disconnected}</span>
+          <span style={{ color: "var(--primary)" }}>{notFoundLabels.themeActive}</span>
         </div>
       </div>
     </div>

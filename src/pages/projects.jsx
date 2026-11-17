@@ -7,15 +7,20 @@ import {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import {
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
+  LayoutGrid,
 } from "lucide-react";
 import { projectsData, categories } from "../data/projectsData";
 import { projectDetailsTranslations } from "../data/projectDetailsTranslations";
 import { translations } from "../data/translations";
-import ProjectCanvas from "../components/projects/ProjectCanvas";
 import ProjectFilters from "../components/projects/ProjectFilters";
 import ProjectCard from "../components/projects/ProjectCard";
+import ProjectGridCard from "../components/projects/ProjectGridCard";
 import ProjectDetailModal from "../components/projects/ProjectDetailModal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,9 +28,20 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const [viewMode, setViewMode] = useState("book"); // "book" | "grid"
   const [lang, setLang] = useState(() => localStorage.getItem("dafa_portfolio_lang") || "id");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     function handleLangChange() {
@@ -78,10 +94,8 @@ export default function Projects() {
   const containerRef = useRef(null);
   const triggerRef = useRef(null);
   const viewportRef = useRef(null);
-  const canvasRef = useRef(null);
   const cardsRef = useRef([]);
   const activeProjectIndexRef = useRef(0);
-  const sceneProgressRef = useRef({ value: 0 });
 
   const handleOpenModal = (project) => {
     setSelectedProjectId(project.id);
@@ -93,13 +107,22 @@ export default function Projects() {
     setSelectedProjectId(null);
   };
 
+  const handlePrevProject = () => {
+    setActiveProjectIndex((prev) => (prev > 0 ? prev - 1 : localizedProjects.length - 1));
+  };
+
+  const handleNextProject = () => {
+    setActiveProjectIndex((prev) => (prev < localizedProjects.length - 1 ? prev + 1 : 0));
+  };
+
   const selectedProject = localizedProjects.find(
     (project) => project.id === selectedProjectId
   );
 
   useLayoutEffect(() => {
+    if (viewMode !== "book" || window.innerWidth < 768) return; // Skip GSAP if grid mode or mobile
+
     activeProjectIndexRef.current = 0;
-    sceneProgressRef.current.value = 0;
     setActiveProjectIndex(0);
 
     const ctx = gsap.context(() => {
@@ -157,7 +180,6 @@ export default function Projects() {
           anticipatePin: 1,
           onUpdate: () => {
             if (!timeline) return;
-            sceneProgressRef.current.value = timeline.progress();
             let currentIndex = 0;
             transitionStarts.forEach((start, index) => {
               if (timeline.time() >= start + transitionDuration / 2) {
@@ -210,15 +232,6 @@ export default function Projects() {
             startTime
           )
           .to(
-            sceneProgressRef.current,
-            {
-              value: (i + 1) / (cards.length - 1),
-              duration: transitionDuration,
-              ease: "power2.inOut",
-            },
-            startTime
-          )
-          .to(
             {},
             { duration: readingPause },
             startTime + transitionDuration
@@ -227,7 +240,7 @@ export default function Projects() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [filteredProjects]);
+  }, [filteredProjects, isMobile, viewMode]);
 
   return (
     <div
@@ -235,14 +248,6 @@ export default function Projects() {
       className="relative min-h-screen overflow-hidden pt-24 pb-16 selection:bg-[var(--primary)] selection:text-black font-sans"
       style={{ color: "var(--text-main)" }}
     >
-      {/* 3D WebGL Background Canvas */}
-      <ProjectCanvas
-        canvasRef={canvasRef}
-        viewportRef={viewportRef}
-        hasProjects={hasProjects}
-        sceneProgressRef={sceneProgressRef}
-      />
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-12">
@@ -250,12 +255,56 @@ export default function Projects() {
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "var(--primary)" }}></span>
             <span>{t.projects.section || "SYSTEMS // PORTFOLIO_ARCHIVE"}</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-mono uppercase" style={{ color: "var(--text-main)" }}>
-            {t.projects.title || "Featured Projects"}
-          </h1>
-          <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mt-3 font-sans">
-            {t.projects.desc || "A curated showcase of high-performance web applications, intelligent agents, and digital architectures."}
-          </p>
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-mono uppercase"
+                style={{ color: "var(--text-main)" }}
+              >
+                {t.projects.title || "Featured Projects"}
+              </motion.h1>
+              <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mt-3 font-sans">
+                {t.projects.desc || "A curated showcase of high-performance web applications, intelligent agents, and digital architectures."}
+              </p>
+            </div>
+
+            {/* View Mode Switcher (Book Mode vs Grid Mode) */}
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setViewMode("book")}
+                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-mono font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer ${
+                  viewMode === "book" ? "scale-105 shadow-md" : "opacity-70 hover:opacity-100"
+                }`}
+                style={{
+                  backgroundColor: viewMode === "book" ? "var(--primary-bg)" : "var(--surface-raised)",
+                  borderColor: "var(--primary-border)",
+                  color: viewMode === "book" ? "var(--primary)" : "var(--text-main)",
+                }}
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>{t.projects.bookMode || "BOOK MODE"}</span>
+              </button>
+
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-mono font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer ${
+                  viewMode === "grid" ? "scale-105 shadow-md" : "opacity-70 hover:opacity-100"
+                }`}
+                style={{
+                  backgroundColor: viewMode === "grid" ? "var(--primary-bg)" : "var(--surface-raised)",
+                  borderColor: "var(--primary-border)",
+                  color: viewMode === "grid" ? "var(--primary)" : "var(--text-main)",
+                }}
+              >
+                <LayoutGrid className="w-4 h-4" />
+                <span>{t.projects.gridMode || "GRID MODE"}</span>
+              </button>
+            </div>
+          </div>
 
           {/* Category Filter Buttons */}
           <ProjectFilters
@@ -268,70 +317,130 @@ export default function Projects() {
 
         {/* Projects Showcase Container */}
         {hasProjects ? (
-          <div ref={triggerRef} className="relative min-h-[75vh] flex items-center justify-center">
-            <div
-              ref={viewportRef}
-              className="relative w-full max-w-5xl h-[min(580px,calc(100dvh-152px))] min-h-[440px] [perspective:1800px]"
-            >
-              <div className="relative z-10 w-full h-full" style={{ transformStyle: "preserve-3d" }}>
-                {localizedProjects.map((project, index) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    index={index}
-                    total={localizedProjects.length}
-                    cardRef={(el) => (cardsRef.current[index] = el)}
-                    t={t}
-                    onOpenModal={handleOpenModal}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="absolute inset-x-0 -bottom-4 flex flex-col items-center gap-2 text-[10px] tracking-[0.18em] uppercase pointer-events-none" style={{ color: "var(--text-muted)" }}>
-              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-                <span>{t.projects.scrollPrompt}</span>
-                <ChevronDown className="w-3.5 h-3.5 animate-bounce" style={{ color: "var(--primary)" }} />
-                {activeProjectIndex < localizedProjects.length - 1 ? (
-                  <span>
-                    {t.projects.nextPage}{" "}
-                    <span className="font-bold" style={{ color: "var(--primary)" }}>
-                      {localizedProjects[activeProjectIndex + 1].title}
-                    </span>
-                  </span>
-                ) : (
-                  <span className="font-bold" style={{ color: "var(--primary)" }}>
-                    {t.projects.finalPage}
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2">
-                {localizedProjects.map((project, index) => (
-                  <span
-                    key={project.id}
-                    className="project-progress-track h-1 w-8 overflow-hidden rounded-full"
-                    aria-label={`${index + 1} ${t.projects.card.of} ${localizedProjects.length}`}
-                  >
-                    <span
-                      className="project-progress-fill block h-full rounded-full transition-[width] duration-500"
+          viewMode === "book" ? (
+            <div ref={triggerRef} className="relative min-h-[75vh] flex flex-col items-center justify-center">
+              <div
+                ref={viewportRef}
+                className="relative w-full max-w-5xl h-[min(580px,calc(100dvh-152px))] min-h-[440px] [perspective:1800px]"
+              >
+                <div className="relative z-10 w-full h-full" style={{ transformStyle: "preserve-3d" }}>
+                  {localizedProjects.map((project, index) => (
+                    <div
+                      key={project.id}
+                      ref={(el) => (cardsRef.current[index] = el)}
+                      className="absolute inset-0 transition-opacity duration-300"
                       style={{
-                        width: index <= activeProjectIndex ? "100%" : "0%",
-                        boxShadow:
-                          index === activeProjectIndex
-                            ? "0 0 10px var(--primary)"
-                            : "none",
+                        display: isMobile ? (index === activeProjectIndex ? "flex" : "none") : "flex",
                       }}
-                    />
-                  </span>
-                ))}
-                <span className="ml-1 font-bold" style={{ color: "var(--primary)" }}>
-                  {String(activeProjectIndex + 1).padStart(2, "0")} /{" "}
-                  {String(localizedProjects.length).padStart(2, "0")}
-                </span>
+                    >
+                      <ProjectCard
+                        project={project}
+                        index={index}
+                        total={localizedProjects.length}
+                        t={t}
+                        onOpenModal={handleOpenModal}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              {/* Mobile Chevron Navigation Controls */}
+              {isMobile && (
+                <div className="w-full max-w-5xl flex items-center justify-between mt-6 px-2 z-20">
+                  <button
+                    onClick={handlePrevProject}
+                    className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-mono font-bold tracking-widest uppercase cursor-pointer"
+                    style={{
+                      backgroundColor: "var(--surface-raised)",
+                      borderColor: "var(--primary-border)",
+                      color: "var(--primary)",
+                    }}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>PREV</span>
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-bold" style={{ color: "var(--primary)" }}>
+                      {String(activeProjectIndex + 1).padStart(2, "0")} / {String(localizedProjects.length).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={handleNextProject}
+                    className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-mono font-bold tracking-widest uppercase cursor-pointer"
+                    style={{
+                      backgroundColor: "var(--surface-raised)",
+                      borderColor: "var(--primary-border)",
+                      color: "var(--primary)",
+                    }}
+                  >
+                    <span>NEXT</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
+              {/* Scroll Indicator (Desktop only) */}
+              {!isMobile && (
+                <div className="absolute inset-x-0 -bottom-4 flex flex-col items-center gap-2 text-[10px] tracking-[0.18em] uppercase pointer-events-none" style={{ color: "var(--text-muted)" }}>
+                  <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                    <span>{t.projects.scrollPrompt}</span>
+                    <ChevronDown className="w-3.5 h-3.5 animate-bounce" style={{ color: "var(--primary)" }} />
+                    {activeProjectIndex < localizedProjects.length - 1 ? (
+                      <span>
+                        {t.projects.nextPage}{" "}
+                        <span className="font-bold" style={{ color: "var(--primary)" }}>
+                          {localizedProjects[activeProjectIndex + 1].title}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="font-bold" style={{ color: "var(--primary)" }}>
+                        {t.projects.finalPage}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {localizedProjects.map((project, index) => (
+                      <span
+                        key={project.id}
+                        className="project-progress-track h-1 w-8 overflow-hidden rounded-full"
+                        aria-label={`${index + 1} ${t.projects.card.of} ${localizedProjects.length}`}
+                      >
+                        <span
+                          className="project-progress-fill block h-full rounded-full transition-[width] duration-500"
+                          style={{
+                            width: index <= activeProjectIndex ? "100%" : "0%",
+                            boxShadow:
+                              index === activeProjectIndex
+                                ? "0 0 10px var(--primary)"
+                                : "none",
+                          }}
+                        />
+                      </span>
+                    ))}
+                    <span className="ml-1 font-bold" style={{ color: "var(--primary)" }}>
+                      {String(activeProjectIndex + 1).padStart(2, "0")} /{" "}
+                      {String(localizedProjects.length).padStart(2, "0")}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+              {localizedProjects.map((project, index) => (
+                <ProjectGridCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  t={t}
+                  onOpenModal={handleOpenModal}
+                />
+              ))}
+            </div>
+          )
         ) : (
           <div className="text-center py-20 bg-zinc-900/50 rounded-2xl border border-zinc-800">
             <p className="text-zinc-400 font-mono text-sm">

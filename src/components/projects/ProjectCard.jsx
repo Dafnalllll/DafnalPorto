@@ -71,7 +71,7 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
                 <span className="px-4 py-2 rounded border border-[var(--primary)] bg-black/80 text-[var(--primary)] text-xs font-mono tracking-widest uppercase">
-                  VIEW DOSSIER
+                  {t.projectDetail?.dossier || "VIEW DOSSIER"}
                 </span>
               </div>
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 text-xs font-mono text-white">
@@ -160,7 +160,7 @@ export default function ProjectCard({ project, index, total, cardRef, t, onOpenM
                   }}
                 >
                   <Terminal className="w-3.5 h-3.5" />
-                  <span>DETAILS</span>
+                  <span>{t.projects.card.details}</span>
                 </button>
                 {(project.github || project.link) && (
                   <a

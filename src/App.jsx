@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/loader";
@@ -10,18 +10,78 @@ const Projects = lazy(() => import("./pages/projects"));
 const NotFound = lazy(() => import("./pages/notfound"));
 const MainLayout = lazy(() => import("./components/layouts/mainlayout"));
 
-function App() {
-  const [showInitialLoader, setShowInitialLoader] = useState(true);
+const LOADER_MIN_DURATION = 3000;
+const LOADER_EXIT_DURATION = 560;
 
+function SuspenseLoaderSignal({ onStart, onFinish }) {
   useEffect(() => {
-    const timer = window.setTimeout(() => setShowInitialLoader(false), 1200);
-    return () => window.clearTimeout(timer);
+    onStart();
+    return onFinish;
+  }, [onStart, onFinish]);
+
+  return null;
+}
+
+function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoaderExiting, setIsLoaderExiting] = useState(false);
+  const startedAtRef = useRef(0);
+  const hideTimerRef = useRef(null);
+  const exitTimerRef = useRef(null);
+
+  const handleLoadStart = useCallback(() => {
+    window.clearTimeout(hideTimerRef.current);
+    window.clearTimeout(exitTimerRef.current);
+    startedAtRef.current = performance.now();
+    setIsLoaderExiting(false);
+    setIsLoading(true);
   }, []);
+
+  const handleLoadFinish = useCallback(() => {
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) {
+      setIsLoading(false);
+      setIsLoaderExiting(false);
+      return;
+    }
+
+    const beginExit = () => {
+      setIsLoaderExiting(true);
+      exitTimerRef.current = window.setTimeout(() => {
+        setIsLoading(false);
+        setIsLoaderExiting(false);
+      }, LOADER_EXIT_DURATION);
+    };
+
+    const elapsed = performance.now() - startedAtRef.current;
+    const remaining = Math.max(0, LOADER_MIN_DURATION - elapsed);
+
+    hideTimerRef.current = window.setTimeout(() => {
+      beginExit();
+    }, remaining);
+  }, []);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(hideTimerRef.current);
+      window.clearTimeout(exitTimerRef.current);
+    },
+    []
+  );
 
   return (
     <>
-      {showInitialLoader && <Loader />}
-      <Suspense fallback={showInitialLoader ? null : <Loader />}>
+      {isLoading && <Loader isExiting={isLoaderExiting} />}
+      <Suspense
+        fallback={
+          <SuspenseLoaderSignal
+            onStart={handleLoadStart}
+            onFinish={handleLoadFinish}
+          />
+        }
+      >
         <Routes>
           <Route path="/" element={<Dafnal />} />
           <Route element={<MainLayout />}>

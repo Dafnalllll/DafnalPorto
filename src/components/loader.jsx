@@ -1,74 +1,52 @@
-import { useEffect, useRef } from "react";
-import { animate } from "animejs";
+import { useEffect, useState } from "react";
+import { translations } from "../data/translations";
 
-export default function Loader() {
-  const iconRef = useRef(null);
-  const overlayRef = useRef(null);
+export default function Loader({ isExiting = false }) {
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("dafa_portfolio_lang") || "id"
+  );
+  const t = translations[lang]?.loader || translations.id.loader;
 
   useEffect(() => {
-    try {
-      animate(overlayRef.current, {
-        opacity: [0, 1],
-        duration: 400,
-        easing: "outQuad",
-      });
-
-      animate(iconRef.current, {
-        scale: [0.85, 1.15, 0.85],
-        rotate: [0, 360],
-        loop: true,
-        duration: 2000,
-        easing: "inOutSine",
-      });
-    } catch (e) {
-      console.error("Loader animation error:", e);
+    function handleLanguageChange() {
+      setLang(localStorage.getItem("dafa_portfolio_lang") || "id");
     }
+
+    window.addEventListener("languagechange", handleLanguageChange);
+    return () => window.removeEventListener("languagechange", handleLanguageChange);
   }, []);
 
   return (
     <div
-      ref={overlayRef}
-      className="fixed inset-0 z-50 backdrop-blur-md flex items-center justify-center select-none transition-colors duration-500"
-      style={{ backgroundColor: "var(--bg-main)" }}
+      className={`page-loader fixed inset-0 z-50 flex items-center justify-center select-none ${
+        isExiting ? "page-loader--exiting" : ""
+      }`}
+      role="status"
+      aria-live="polite"
+      aria-label={t.aria}
     >
-      {/* Scanline & Grid Effect */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: `
-            linear-gradient(var(--primary-border) 1px, transparent 1px),
-            linear-gradient(90deg, var(--primary-border) 1px, transparent 1px)
-          `,
-          backgroundSize: "3rem 3rem",
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-30"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--scanline-color) 50%, transparent 50%)",
-          backgroundSize: "100% 4px",
-        }}
-      />
-
-      <div
-        ref={iconRef}
-        className="relative z-10 w-20 h-20 rounded-2xl border flex items-center justify-center shadow-2xl overflow-hidden p-2"
-        style={{
-          backgroundColor: "var(--surface-main)",
-          borderColor: "var(--primary-border)",
-          boxShadow: "0 0 35px var(--primary-bg)",
-        }}
-      >
-        <img
-          src="/dafnal.webp"
-          alt="Dafnal Loader"
-          className="w-full h-full object-cover rounded-xl"
-        />
-        <div
-          className="absolute -inset-1 rounded-2xl opacity-40 blur-md pointer-events-none"
-          style={{ backgroundColor: "var(--primary)" }}
-        />
+      <div className="page-loader__content flex flex-col items-center">
+        <div className="page-loader__stage" aria-hidden="true">
+          <span className="page-loader__orbit page-loader__orbit--outer" />
+          <span className="page-loader__orbit page-loader__orbit--inner" />
+          <span className="page-loader__energy page-loader__energy--vertical" />
+          <span className="page-loader__energy page-loader__energy--horizontal" />
+          <span className="page-loader__spark page-loader__spark--one" />
+          <span className="page-loader__spark page-loader__spark--two" />
+          <span className="page-loader__spark page-loader__spark--three" />
+          <div className="page-loader__core">
+            <span className="page-loader__core-flare" />
+            <img src="/dafnal.webp" alt="" className="page-loader__logo" />
+          </div>
+        </div>
+        <div className="page-loader__caption">
+          <span className="page-loader__eyebrow">{t.eyebrow}</span>
+          <span className="page-loader__status">
+            {t.status}
+            <span className="page-loader__ellipsis" aria-hidden="true">...</span>
+          </span>
+          <span className="page-loader__track"><span /></span>
+        </div>
       </div>
     </div>
   );
